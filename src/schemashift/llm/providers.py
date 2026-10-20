@@ -5,7 +5,8 @@ Spec: llm-assist/providers
 
 from __future__ import annotations
 
-from typing import Type, TypeVar
+from typing import TypeVar
+
 from pydantic import BaseModel
 
 from schemashift.config import LLMConfig
@@ -19,14 +20,14 @@ T = TypeVar("T", bound=BaseModel)
 class BaseProvider:
     """Base class for LLM providers."""
 
-    def complete(self, prompt: str, schema: Type[T]) -> T | None:
+    def complete(self, prompt: str, schema: type[T]) -> T | None:
         raise NotImplementedError
 
 
 class NoneProvider(BaseProvider):
     """Null provider that always returns None, triggering deterministic fallbacks."""
 
-    def complete(self, prompt: str, schema: Type[T]) -> T | None:
+    def complete(self, prompt: str, schema: type[T]) -> T | None:
         return None
 
 
@@ -37,7 +38,7 @@ class ReplayProvider(BaseProvider):
         self.cache = cache
         self.model = model
 
-    def complete(self, prompt: str, schema: Type[T]) -> T | None:
+    def complete(self, prompt: str, schema: type[T]) -> T | None:
         clean_prompt = redact_prompt(prompt)
         cached = self.cache.get("openai", self.model, clean_prompt)
         if cached is None:
@@ -46,7 +47,7 @@ class ReplayProvider(BaseProvider):
 
         if cached is None:
             raise LLMCacheMiss(
-                f"Cache miss in replay provider for prompt hash.",
+                "Cache miss in replay provider for prompt hash.",
                 hint="Run once with provider=openai or add response to workspace/llm_cache.",
             )
         return parse_and_validate(cached, schema)
@@ -73,13 +74,12 @@ class OpenAIProvider(BaseProvider):
                 hint="Install with `uv add openai`.",
             ) from exc
 
-        client_kwargs = {"api_key": config.api_key}
-        if config.api_base:
-            client_kwargs["base_url"] = config.api_base
+        self.client = openai.OpenAI(
+            api_key=config.api_key or "none",
+            base_url=config.api_base or None,
+        )
 
-        self.client = openai.OpenAI(**client_kwargs)
-
-    def complete(self, prompt: str, schema: Type[T]) -> T | None:
+    def complete(self, prompt: str, schema: type[T]) -> T | None:
         clean_prompt = redact_prompt(prompt) if self.config.redact else prompt
 
         # Check cache first
@@ -106,6 +106,6 @@ class OpenAIProvider(BaseProvider):
             # Save to cache
             self.cache.put("openai", self.config.model, clean_prompt, raw_text)
             return parse_and_validate(raw_text, schema)
-        except Exception as exc:
+        except Exception:
             # Fall back to None on API error
             return None

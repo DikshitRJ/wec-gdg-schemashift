@@ -5,9 +5,11 @@ Spec: orchestration/node-orm-final
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
+
 from schemashift.assist.refactor_notes import generate_refactor_notes
 from schemashift.config import Settings
 from schemashift.contracts.state import GraphState
@@ -59,10 +61,11 @@ def orm_smoke_node(state: GraphState) -> GraphState:
     demo_script = Path(state["orm_dir"]) / "crud_demo.py"
     if demo_script.exists():
         # Execute smoke test script
-        env = {
-            "PYTHONPATH": f"{Path(state['orm_dir']).parent.resolve()}:{Path('src').resolve()}",
-            "PG_URI": settings.target.uri,
-        }
+        env = dict(os.environ)
+        env["PYTHONPATH"] = (
+            f"{Path(state['orm_dir']).parent.resolve()}:{Path(state['orm_dir']).resolve()}:{Path('src').resolve()}:{env.get('PYTHONPATH', '')}"
+        )
+        env["PG_URI"] = settings.target.uri
         res = subprocess.run(
             [sys.executable, str(demo_script)],
             capture_output=True,

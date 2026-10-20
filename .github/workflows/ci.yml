@@ -57,9 +57,9 @@ jobs:
       - name: Start MongoDB and PostgreSQL services
         run: docker compose up -d --wait mongo postgres
       - name: Run integration tests
-        run: uv run pytest tests/integration -q
+        run: uv run pytest tests/integration -m integration -q
       - name: Run E2E pipeline tests
-        run: uv run pytest tests/e2e -q
+        run: uv run pytest tests/e2e -m e2e -q
       - name: Determinism verification
         run: bash scripts/check_determinism.sh
       - name: Upload generated artifacts
@@ -72,3 +72,12 @@ jobs:
       - name: Tear down services
         if: always()
         run: docker compose down -v
+
+  # Phase 3 Gate: Single unified verification tick
+  ci-success:
+    name: "CI Gate: Phase 1 & Phase 2 Verified"
+    needs: [quality, integration]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm All Quality & Integration Gates Passed
+        run: echo "All Phase 1 and Phase 2 quality gates passed successfully."

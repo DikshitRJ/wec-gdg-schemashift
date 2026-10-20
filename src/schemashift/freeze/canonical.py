@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+
 from schemashift.contracts.schema_map import SchemaMap
 
 

@@ -1,0 +1,7 @@
+{
+  "key": "252c308c715f87e019be7bc1c65a90907d763f234a4fb903437fbc03088a7f5c",
+  "provider": "replay",
+  "model": "gemini-2.5-flash",
+  "prompt": "Review this target SQL schema with tables ['orders', 'orders_items', 'products', 'products_categories', 'reviews', 'users', 'users_tags'].\nHighlight potential migration risks (e.g. data loss, foreign key ordering, type truncations).\nReturn ScriptAnnotation JSON.",
+  "response": "{\"risk_level\": \"low\", \"notes\": [\"DDL creates tables with foreign keys and unique constraints.\", \"ETL migrates collections in topological dependency order.\"], \"summary\": \"Low risk migration scripts generated deterministically.\"}"
+}

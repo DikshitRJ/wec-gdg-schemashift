@@ -4,7 +4,8 @@ Spec: tests/integration-ddl
 """
 
 import pytest
-from schemashift.contracts.schema_map import Column, ForeignKey, Index, SchemaMap, Table
+
+from schemashift.contracts.schema_map import Column, SchemaMap, Table
 from schemashift.gen.ddl import generate_ddl_sql
 from schemashift.gen.rollback import generate_rollback_sql
 from schemashift.migrate.executor import execute_sql_script

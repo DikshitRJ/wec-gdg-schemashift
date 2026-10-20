@@ -6,6 +6,7 @@ Spec: llm-assist/diagnose-failures
 from __future__ import annotations
 
 import json
+
 from schemashift.assist.fallbacks import fallback_diagnose_failures
 from schemashift.contracts.llm import RemapPatch
 from schemashift.llm.client import LLMClient

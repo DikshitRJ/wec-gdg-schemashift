@@ -7,7 +7,8 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Type, TypeVar
+from typing import TypeVar
+
 from pydantic import BaseModel, ValidationError
 
 T = TypeVar("T", bound=BaseModel)
@@ -20,11 +21,13 @@ def redact_prompt(text: str) -> str:
     # Redact postgres URIs
     s = re.sub(r"postgresql://[^@]+@", "postgresql://<redacted>@", s)
     # Redact api keys
-    s = re.sub(r"(api[_-]?key|password)\s*[:=]\s*['\"][^'\"]+['\"]", r"\1: '<redacted>'", s, flags=re.I)
+    s = re.sub(
+        r"(api[_-]?key|password)\s*[:=]\s*['\"][^'\"]+['\"]", r"\1: '<redacted>'", s, flags=re.I
+    )
     return s
 
 
-def parse_and_validate(raw_text: str, target_model: Type[T]) -> T | None:
+def parse_and_validate[T: BaseModel](raw_text: str, target_model: type[T]) -> T | None:
     """Extract JSON from raw text and validate against target Pydantic model."""
     if not raw_text:
         return None

@@ -6,7 +6,8 @@ Spec: scriptgen/ddl
 from __future__ import annotations
 
 from pathlib import Path
-from schemashift.contracts.schema_map import Column, ForeignKey, Index, SchemaMap, Table
+
+from schemashift.contracts.schema_map import Index, SchemaMap
 from schemashift.gen.header import make_sql_header
 from schemashift.identifiers import quote_ident
 from schemashift.migrate.ordering import get_table_topological_order
@@ -42,7 +43,16 @@ def generate_ddl_sql(schema_map: SchemaMap) -> str:
         # Primary Key
         if table.primary_key:
             pk_cols = ", ".join(quote_ident(c) for c in table.primary_key)
-            col_defs.append(f"  CONSTRAINT {quote_ident(f'pk_{table.name}')} PRIMARY KEY ({pk_cols})")
+            col_defs.append(
+                f"  CONSTRAINT {quote_ident(f'pk_{table.name}')} PRIMARY KEY ({pk_cols})"
+            )
+
+        # Unique Constraints
+        for idx in table.indexes:
+            if idx.unique:
+                cols = ", ".join(quote_ident(c) for c in idx.columns)
+                uq_name = f"uq_{table.name}_{'_'.join(idx.columns)}"
+                col_defs.append(f"  CONSTRAINT {quote_ident(uq_name)} UNIQUE ({cols})")
 
         # Foreign Keys
         for fk in table.foreign_keys:
@@ -56,22 +66,24 @@ def generate_ddl_sql(schema_map: SchemaMap) -> str:
 
         # Check constraint for child table position column
         if any(c.name == "position" for c in table.columns):
-            col_defs.append(f"  CONSTRAINT {quote_ident(f'chk_{table.name}_pos')} CHECK ({quote_ident('position')} >= 0)")
+            col_defs.append(
+                f"  CONSTRAINT {quote_ident(f'chk_{table.name}_pos')} CHECK ({quote_ident('position')} >= 0)"
+            )
 
         lines.append(",\n".join(col_defs))
         lines.append(");\n")
 
-        # Collect indexes
+        # Collect non-unique indexes
         for idx in table.indexes:
-            indexes_to_create.append((table.name, idx))
+            if not idx.unique:
+                indexes_to_create.append((table.name, idx))
 
-    # Add indexes after table definitions
+    # Add non-unique indexes after table definitions
     for tbl_name, idx in indexes_to_create:
-        u = "UNIQUE " if idx.unique else ""
         idx_name = f"idx_{tbl_name}_{'_'.join(idx.columns)}"
         cols_q = ", ".join(quote_ident(c) for c in idx.columns)
         lines.append(
-            f"CREATE {u}INDEX IF NOT EXISTS {quote_ident(idx_name)} ON {quote_ident(tbl_name)} ({cols_q});"
+            f"CREATE INDEX IF NOT EXISTS {quote_ident(idx_name)} ON {quote_ident(tbl_name)} ({cols_q});"
         )
 
     lines.append("")

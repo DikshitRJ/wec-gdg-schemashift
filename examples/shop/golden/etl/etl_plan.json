@@ -1,0 +1,621 @@
+{
+  "map_hash": "sha256:a6dfb0cbaaa0ab1359eb734eda0c7299de6dff4cc78daf6700c410ab03f866e6",
+  "map_version": 1,
+  "source_database": "shop",
+  "tables": [
+    {
+      "columns": [
+        {
+          "identity": false,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "attrs",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "JSONB",
+          "source_path": "attrs",
+          "transform": "json_dump"
+        },
+        {
+          "identity": false,
+          "name": "description",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "description",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "in_stock",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "BOOLEAN",
+          "source_path": "inStock",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "name",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "name",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "price",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "NUMERIC(12,2)",
+          "source_path": "price",
+          "transform": "decimal_numeric"
+        },
+        {
+          "identity": false,
+          "name": "sku",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "sku",
+          "transform": "identity"
+        }
+      ],
+      "foreign_keys": [],
+      "iteration_path": "",
+      "kind": "root",
+      "name": "products",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "products"
+    },
+    {
+      "columns": [
+        {
+          "identity": true,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "BIGINT",
+          "source_path": "",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "product_id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "position",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "INTEGER",
+          "source_path": "$index",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "value",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "categories[]",
+          "transform": "identity"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "product_id"
+          ],
+          "on_delete": "CASCADE",
+          "ref_columns": [
+            "id"
+          ],
+          "ref_table": "products"
+        }
+      ],
+      "iteration_path": "categories[]",
+      "kind": "child",
+      "name": "products_categories",
+      "parent_fk_col": "product_id",
+      "parent_ref_table": "products",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "products"
+    },
+    {
+      "columns": [
+        {
+          "identity": false,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "address_city",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "address.city",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "address_geo_lat",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "DOUBLE PRECISION",
+          "source_path": "address.geo.lat",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "address_geo_lng",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "DOUBLE PRECISION",
+          "source_path": "address.geo.lng",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "address_state",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "address.state",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "address_street",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "address.street",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "address_zip",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "address.zip",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "created_at",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TIMESTAMPTZ",
+          "source_path": "createdAt",
+          "transform": "date_utc"
+        },
+        {
+          "identity": false,
+          "name": "email",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "email",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "name",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "name",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "prefs_newsletter",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "BOOLEAN",
+          "source_path": "prefs.newsletter",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "prefs_theme",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "prefs.theme",
+          "transform": "identity"
+        }
+      ],
+      "foreign_keys": [],
+      "iteration_path": "",
+      "kind": "root",
+      "name": "users",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "users"
+    },
+    {
+      "columns": [
+        {
+          "identity": false,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "coupon_code",
+          "nullable": true,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "couponCode",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "created_at",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TIMESTAMPTZ",
+          "source_path": "createdAt",
+          "transform": "date_utc"
+        },
+        {
+          "identity": false,
+          "name": "shipping_address_city",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "shipping.address.city",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "shipping_address_state",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "shipping.address.state",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "shipping_address_street",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "shipping.address.street",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "shipping_address_zip",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "shipping.address.zip",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "shipping_carrier",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "shipping.carrier",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "shipping_tracking_no",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "shipping.trackingNo",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "status",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "status",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "user_id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "userId",
+          "transform": "objectid_hex"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "on_delete": "NO ACTION",
+          "ref_columns": [
+            "id"
+          ],
+          "ref_table": "users"
+        }
+      ],
+      "iteration_path": "",
+      "kind": "root",
+      "name": "orders",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "orders"
+    },
+    {
+      "columns": [
+        {
+          "identity": true,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "BIGINT",
+          "source_path": "",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "order_id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "position",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "INTEGER",
+          "source_path": "$index",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "qty",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "INTEGER",
+          "source_path": "items[].qty",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "sku",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "items[].sku",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "unit_price",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "NUMERIC(12,2)",
+          "source_path": "items[].unitPrice",
+          "transform": "decimal_numeric"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "on_delete": "CASCADE",
+          "ref_columns": [
+            "id"
+          ],
+          "ref_table": "orders"
+        }
+      ],
+      "iteration_path": "items[]",
+      "kind": "child",
+      "name": "orders_items",
+      "parent_fk_col": "order_id",
+      "parent_ref_table": "orders",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "orders"
+    },
+    {
+      "columns": [
+        {
+          "identity": false,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "body",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "body",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "created_at",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TIMESTAMPTZ",
+          "source_path": "createdAt",
+          "transform": "date_utc"
+        },
+        {
+          "identity": false,
+          "name": "product_sku",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "productSku",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "rating",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "SMALLINT",
+          "source_path": "rating",
+          "transform": "int_coerce"
+        },
+        {
+          "identity": false,
+          "name": "title",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "title",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "user_id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "userId",
+          "transform": "objectid_hex"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "product_sku"
+          ],
+          "on_delete": "NO ACTION",
+          "ref_columns": [
+            "sku"
+          ],
+          "ref_table": "products"
+        },
+        {
+          "columns": [
+            "user_id"
+          ],
+          "on_delete": "NO ACTION",
+          "ref_columns": [
+            "id"
+          ],
+          "ref_table": "users"
+        }
+      ],
+      "iteration_path": "",
+      "kind": "root",
+      "name": "reviews",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "reviews"
+    },
+    {
+      "columns": [
+        {
+          "identity": true,
+          "name": "id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "BIGINT",
+          "source_path": "",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "user_id",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "CHAR(24)",
+          "source_path": "_id",
+          "transform": "objectid_hex"
+        },
+        {
+          "identity": false,
+          "name": "position",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "INTEGER",
+          "source_path": "$index",
+          "transform": "identity"
+        },
+        {
+          "identity": false,
+          "name": "value",
+          "nullable": false,
+          "on_error": "fail",
+          "pg_type": "TEXT",
+          "source_path": "tags[]",
+          "transform": "identity"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "user_id"
+          ],
+          "on_delete": "CASCADE",
+          "ref_columns": [
+            "id"
+          ],
+          "ref_table": "users"
+        }
+      ],
+      "iteration_path": "tags[]",
+      "kind": "child",
+      "name": "users_tags",
+      "parent_fk_col": "user_id",
+      "parent_ref_table": "users",
+      "primary_key": [
+        "id"
+      ],
+      "source_collection": "users"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
 from schemashift.assist.merge import merge_proposals
 from schemashift.assist.suggest_schema import suggest_schema
 from schemashift.config import Settings
@@ -47,6 +48,7 @@ def suggest_schema_node(state: GraphState) -> GraphState:
 def merge_proposals_node(state: GraphState) -> GraphState:
     """Deterministic node: validate/merge LLM proposals and user overrides."""
     import json
+
     from schemashift.contracts.llm import SchemaProposal
 
     config_path = state.get("config_path", "workspace/schemashift.yaml")

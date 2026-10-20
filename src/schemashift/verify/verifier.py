@@ -5,8 +5,9 @@ Spec: verify/verifier
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
+from typing import Any
+
 from pymongo import MongoClient
 
 from schemashift.contracts.schema_map import SchemaMap
@@ -25,7 +26,7 @@ def run_verification(
     out_dir: str = "workspace/out",
 ) -> VerifyReport:
     """Run all verification suites and persist report."""
-    mongo_client = MongoClient(mongo_uri)
+    mongo_client: MongoClient[dict[str, Any]] = MongoClient(mongo_uri)
 
     checks: list[CheckResult] = []
 

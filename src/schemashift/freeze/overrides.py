@@ -7,9 +7,10 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
+
 import yaml
 
-from schemashift.contracts.schema_map import Column, SchemaMap, Table
+from schemashift.contracts.schema_map import SchemaMap
 from schemashift.errors import ConfigurationError
 
 
@@ -20,7 +21,8 @@ def load_overrides(file_path: str | Path) -> list[dict[str, Any]]:
         return []
     try:
         content = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
-        return content.get("overrides", [])
+        overrides_list = content.get("overrides", [])
+        return list(overrides_list) if isinstance(overrides_list, list) else []
     except Exception as exc:
         raise ConfigurationError(
             f"Failed to parse overrides file '{p}': {exc}",
@@ -44,9 +46,8 @@ def apply_overrides(schema_map: SchemaMap, overrides: list[dict[str, Any]]) -> S
             # Table-level override (e.g. rename table)
             target_table = parts[0]
             for tbl in schema_map.tables:
-                if tbl.name == target_table:
-                    if "rename" in settings:
-                        tbl.name = settings["rename"]
+                if tbl.name == target_table and "rename" in settings:
+                    tbl.name = settings["rename"]
         elif len(parts) == 2:
             # Column-level override (e.g. reviews.rating)
             target_table, target_col = parts[0], parts[1]
@@ -55,6 +56,8 @@ def apply_overrides(schema_map: SchemaMap, overrides: list[dict[str, Any]]) -> S
                 if tbl.name == target_table or tbl.origin_collection == target_table:
                     for col in tbl.columns:
                         if col.name == target_col or col.source_path.split(".")[-1] == target_col:
+                            if "rename" in settings:
+                                col.name = settings["rename"]
                             if "pg_type" in settings:
                                 col.pg_type = settings["pg_type"]
                             if "transform" in settings:

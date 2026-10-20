@@ -1,0 +1,7 @@
+{
+  "key": "461ddeed6eb05e93f0cfa1a9ff4a460c9ca1132da01a9a4eb470de31894b1d47",
+  "provider": "replay",
+  "model": "gemini-2.5-flash",
+  "prompt": "Review this target schema: ['orders', 'orders_items', 'products', 'products_categories', 'reviews', 'users', 'users_tags'].\nSuggest query idioms for replacing MongoDB queries (like $lookup or nested filters) with SQLAlchemy.",
+  "response": "{\"file\": \"orm/models.py\", \"location\": \"all\", \"suggestion\": \"Review JSONB columns and type coercions in SQLAlchemy models.\", \"rationale\": \"Semi-structured fields are mapped to Postgres JSONB for flexibility.\"}"
+}

@@ -5,7 +5,6 @@ Spec: infer/typemap
 
 from __future__ import annotations
 
-from typing import Any
 from schemashift.contracts.profile import FieldProfile
 
 
@@ -32,7 +31,9 @@ def select_pg_type_and_transform(field: FieldProfile) -> tuple[str, str, bool]:
         if "string" in types:
             return "SMALLINT", "int_coerce", True
         num_range = field.numeric_range
-        if num_range and (num_range.get("min", 0) < -2147483648 or num_range.get("max", 0) > 2147483647):
+        if num_range and (
+            num_range.get("min", 0) < -2147483648 or num_range.get("max", 0) > 2147483647
+        ):
             return "BIGINT", "identity", ambiguous
         return "INTEGER", "identity", ambiguous
     elif dominant_type == "double":

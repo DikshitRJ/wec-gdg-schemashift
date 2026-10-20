@@ -6,6 +6,7 @@ Spec: llm-assist/explain-similarity
 from __future__ import annotations
 
 from pathlib import Path
+
 from schemashift.assist.fallbacks import fallback_explain_similarity
 from schemashift.contracts.llm import ExplanationNote
 from schemashift.contracts.similarity import SimilarityReport

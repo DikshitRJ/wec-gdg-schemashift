@@ -7,7 +7,6 @@ from schemashift.assist.fallbacks import (
     fallback_annotate_scripts,
     fallback_diagnose_failures,
     fallback_explain_similarity,
-    fallback_schema_proposal,
 )
 from schemashift.assist.merge import merge_proposals
 from schemashift.contracts.llm import ProposedDecision, SchemaProposal

@@ -1,0 +1,7 @@
+{
+  "key": "fd667846a5c7e35677a66883c34bd0a435ab9472b9bef9b15bab71321a3fc4df",
+  "provider": "replay",
+  "model": "claude-sonnet-4-6",
+  "prompt": "Review this target schema: ['orders', 'orders_items', 'products', 'products_categories', 'reviews', 'users', 'users_tags'].\nSuggest query idioms for replacing MongoDB queries (like $lookup or nested filters) with SQLAlchemy.",
+  "response": "{\"file\": \"orm/models.py\", \"location\": \"all\", \"suggestion\": \"Review JSONB columns and type coercions in SQLAlchemy models.\", \"rationale\": \"Semi-structured fields are mapped to Postgres JSONB for flexibility.\"}"
+}

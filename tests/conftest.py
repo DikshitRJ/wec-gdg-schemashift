@@ -7,11 +7,11 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Generator
 
+import psycopg
 import pytest
+from pymongo import MongoClient
 
-# Ensure source directory is in PYTHONPATH
 FIXTURES_DIR = Path(__file__).parent / "fixtures" / "shop"
 
 
@@ -33,3 +33,17 @@ def pg_uri() -> str:
     return os.environ.get(
         "PG_URI", "postgresql://schemashift:schemashift@localhost:5432/schemashift"
     )
+
+
+@pytest.fixture
+def mongo_client(mongo_uri: str) -> MongoClient:  # type: ignore[type-arg]
+    """Connected MongoClient fixture."""
+    return MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+
+
+@pytest.fixture
+def pg_connection(pg_uri: str) -> psycopg.Connection:  # type: ignore[type-arg]
+    """Connected psycopg connection fixture with autocommit."""
+    conn = psycopg.connect(pg_uri, autocommit=True)
+    yield conn
+    conn.close()

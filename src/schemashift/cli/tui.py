@@ -52,7 +52,11 @@ def render_similarity_table(report: SimilarityReport) -> None:
 
     for es in report.entity_scores:
         score_pct = f"{es.total * 100:.1f}%"
-        status = "[green]Matched[/]" if es.total >= 0.85 else ("[yellow]Guessed[/]" if es.total >= 0.60 else "[red]Review[/]")
+        status = (
+            "[green]Matched[/]"
+            if es.total >= 0.85
+            else ("[yellow]Guessed[/]" if es.total >= 0.60 else "[red]Review[/]")
+        )
         table.add_row(
             es.collection,
             ", ".join(es.tables) or "unmapped",
@@ -86,7 +90,7 @@ def render_gate_panel(items: list[dict], overall_score: float, overall_band: str
     """Render human-in-the-loop gate review panel."""
     console.print()
     content = [
-        f"[bold yellow]HUMAN APPROVAL GATE REQUIRED[/]",
+        "[bold yellow]HUMAN APPROVAL GATE REQUIRED[/]",
         f"Overall Match: [bold]{overall_score * 100:.1f}%[/] ({overall_band.upper()})",
         "",
         "The following mappings require explicit operator approval before freezing:",
@@ -94,6 +98,8 @@ def render_gate_panel(items: list[dict], overall_score: float, overall_band: str
     for it in items:
         content.append(f"- [bold red]{it.get('target')}[/]: {', '.join(it.get('reasons', []))}")
 
-    content.append("\n[bold]Options:[/] [green](a)pprove[/] | [red](r)eject[/] | [cyan](e)dit to overrides[/]")
+    content.append(
+        "\n[bold]Options:[/] [green](a)pprove[/] | [red](r)eject[/] | [cyan](e)dit to overrides[/]"
+    )
 
     console.print(Panel("\n".join(content), title="[bold red]Approval Gate[/]", border_style="red"))

@@ -6,6 +6,7 @@ Spec: infer/rules
 from __future__ import annotations
 
 from typing import Any
+
 from schemashift.contracts.schema_map import Decision
 
 

@@ -5,8 +5,10 @@ Spec: orchestration/node-migrate
 
 from __future__ import annotations
 
+import contextlib
 import json
 from pathlib import Path
+
 from schemashift.assist.diagnose_failures import diagnose_failures
 from schemashift.config import Settings
 from schemashift.contracts.state import GraphState
@@ -26,10 +28,8 @@ def apply_ddl_node(state: GraphState) -> GraphState:
     # If reset_target is enabled, run down script first to clean database
     if settings.target.reset_target and state.get("rollback_path"):
         down_sql = Path(state["rollback_path"]).read_text(encoding="utf-8")
-        try:
+        with contextlib.suppress(Exception):
             execute_sql_script(settings.target.uri, down_sql, stop_on_error=False)
-        except Exception:
-            pass
 
     ddl_sql = Path(state["ddl_path"]).read_text(encoding="utf-8")
     execute_sql_script(settings.target.uri, ddl_sql, stop_on_error=True)
@@ -70,7 +70,9 @@ def migrate_data_node(state: GraphState) -> GraphState:
             "node_type": "D",
             "migration_ok": False,
             "error": str(me),
-            "failures_path": str((Path(settings.paths.out) / "reports" / "failures.json").resolve()),
+            "failures_path": str(
+                (Path(settings.paths.out) / "reports" / "failures.json").resolve()
+            ),
         }
 
 

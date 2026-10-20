@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+
 from langgraph.types import interrupt
 
 from schemashift.contracts.schema_map import SchemaMap
@@ -31,12 +31,14 @@ def approval_gate_node(state: GraphState) -> GraphState:
 
     if not gate_eval.passed and not ci_mode:
         # HITL interrupt: passes gate evaluation details to the UI/runner
-        gate_input = interrupt({
-            "type": "approval_gate",
-            "items": [it.model_dump() for it in gate_eval.items],
-            "overall_score": similarity_report.overall_score,
-            "overall_band": similarity_report.overall_band.value,
-        })
+        gate_input = interrupt(
+            {
+                "type": "approval_gate",
+                "items": [it.model_dump() for it in gate_eval.items],
+                "overall_score": similarity_report.overall_score,
+                "overall_band": similarity_report.overall_band.value,
+            }
+        )
 
         # Process user decision from interrupt resume
         if isinstance(gate_input, dict):
@@ -80,11 +82,13 @@ def remap_gate_node(state: GraphState) -> GraphState:
 
     if not ci_mode:
         # Interrupt to ask reviewer whether to apply suggested patch
-        gate_input = interrupt({
-            "type": "remap_gate",
-            "attempt": remap_attempts,
-            "max_attempts": max_remap_attempts,
-        })
+        gate_input = interrupt(
+            {
+                "type": "remap_gate",
+                "attempt": remap_attempts,
+                "max_attempts": max_remap_attempts,
+            }
+        )
         if isinstance(gate_input, dict) and gate_input.get("action") == "abort":
             return {
                 "current_node": "remap_gate",

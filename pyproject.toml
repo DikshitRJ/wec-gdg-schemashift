@@ -43,6 +43,7 @@ packages = ["src/schemashift"]
 target-version = "py312"
 line-length = 100
 src = ["src"]
+extend-exclude = ["examples", "workspace"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]

@@ -6,7 +6,9 @@ Spec: orchestration/runner
 from __future__ import annotations
 
 import uuid
-from typing import Any, Generator
+from collections.abc import Generator
+from typing import Any, cast
+
 from langgraph.types import Command
 
 from schemashift.contracts.state import GraphState
@@ -70,11 +72,11 @@ class MigrationRunner:
             "overrides": overrides or [],
         }
 
-        command = Command(resume=resume_payload)
+        command: Any = Command(resume=resume_payload)
         for event in self.app.stream(command, config=thread_cfg, stream_mode="updates"):
             yield {"event": "update", "run_id": run_id, "data": event}
 
         state_snapshot = self.app.get_state(thread_cfg)
         final_state = state_snapshot.values if state_snapshot else {}
         yield {"event": "complete", "run_id": run_id, "state": final_state}
-        return final_state
+        return cast(GraphState, final_state)

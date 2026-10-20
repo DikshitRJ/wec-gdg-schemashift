@@ -1,0 +1,7 @@
+{
+  "key": "fe650828cd2e6d0d5fea1a295d04f2286159945096789b9a4d5f90ba59447655",
+  "provider": "openai",
+  "model": "gemini-2.5-flash",
+  "prompt": "Explain why this database migration has a match percentage of 93.5%.\nTop drag fields: ['userId', 'userId', 'tags[]', 'rating', 'categories[]']\nReturn ExplanationNote JSON with section and text fields.",
+  "response": "{\"section\": \"similarity\", \"text\": \"Mongo and SQL schemas match closely with normalized foreign keys.\", \"ambiguous_pairs\": []}"
+}

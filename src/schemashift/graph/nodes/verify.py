@@ -5,7 +5,9 @@ Spec: orchestration/node-verify
 
 from __future__ import annotations
 
+import contextlib
 from pathlib import Path
+
 from schemashift.assist.drift_summary import summarize_drift
 from schemashift.config import Settings
 from schemashift.contracts.state import GraphState
@@ -42,6 +44,7 @@ def verify_node(state: GraphState) -> GraphState:
 def drift_summary_node(state: GraphState) -> GraphState:
     """Non-deterministic assist node: explain verification drift."""
     import json
+
     from schemashift.contracts.verify import VerifyReport
 
     config_path = state.get("config_path", "workspace/schemashift.yaml")
@@ -69,10 +72,8 @@ def rollback_node(state: GraphState) -> GraphState:
 
     if state.get("rollback_path"):
         down_sql = Path(state["rollback_path"]).read_text(encoding="utf-8")
-        try:
+        with contextlib.suppress(Exception):
             execute_sql_script(settings.target.uri, down_sql, stop_on_error=False)
-        except Exception:
-            pass
 
     return {
         "current_node": "rollback",

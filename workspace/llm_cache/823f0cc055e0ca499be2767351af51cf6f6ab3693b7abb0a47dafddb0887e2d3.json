@@ -1,0 +1,7 @@
+{
+  "key": "823f0cc055e0ca499be2767351af51cf6f6ab3693b7abb0a47dafddb0887e2d3",
+  "provider": "replay",
+  "model": "claude-sonnet-4-6",
+  "prompt": "Review this target SQL schema with tables ['orders', 'orders_items', 'products', 'products_categories', 'reviews', 'users', 'users_tags'].\nHighlight potential migration risks (e.g. data loss, foreign key ordering, type truncations).\nReturn ScriptAnnotation JSON.",
+  "response": "{\"risk_level\": \"low\", \"notes\": [\"DDL creates tables with foreign keys and unique constraints.\", \"ETL migrates collections in topological dependency order.\"], \"summary\": \"Low risk migration scripts generated deterministically.\"}"
+}

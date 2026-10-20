@@ -5,12 +5,12 @@ Spec: foundation/similarity-models
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel, Field
 
 
-class Band(str, Enum):
+class Band(StrEnum):
     """Confidence band for a mapping."""
 
     MATCHED = "matched"

@@ -11,16 +11,13 @@ from schemashift.contracts import (
     Column,
     Decision,
     EntityScore,
-    FieldProfile,
     FieldScore,
     ForeignKey,
     Index,
     SchemaMap,
     SimilarityReport,
     SourceInfo,
-    SourceProfile,
     Table,
-    VerifyReport,
 )
 
 

@@ -8,11 +8,10 @@ Spec: sample_app/mongo-app
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from decimal import Decimal
+from datetime import UTC, datetime
 from typing import Any
 
-from bson import Decimal128, ObjectId
+from bson import ObjectId
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
@@ -73,7 +72,7 @@ class MongoShopApp:
             )
         doc = {
             **user,
-            "createdAt": user.get("createdAt", datetime.now(tz=timezone.utc)),
+            "createdAt": user.get("createdAt", datetime.now(tz=UTC)),
         }
         try:
             result = self.users.insert_one(doc)
@@ -82,7 +81,7 @@ class MongoShopApp:
                 f"Failed to create user: {exc}",
                 hint="Check for duplicate email or connectivity issues.",
             ) from exc
-        return result.inserted_id
+        return ObjectId(str(result.inserted_id))
 
     def get_user(self, user_id: ObjectId) -> dict[str, Any] | None:
         """Return a single user by ``_id``, or ``None``."""
@@ -95,9 +94,7 @@ class MongoShopApp:
         limit: int = 50,
     ) -> list[dict[str, Any]]:
         """Return a paginated list of users sorted by email."""
-        return list(
-            self.users.find().sort("email", 1).skip(skip).limit(limit)
-        )
+        return list(self.users.find().sort("email", 1).skip(skip).limit(limit))
 
     def update_user(self, user_id: ObjectId, updates: dict[str, Any]) -> bool:
         """Update fields on a user document.  Returns ``True`` if matched."""
@@ -156,11 +153,13 @@ class MongoShopApp:
                     f"Product with SKU '{item['sku']}' not found.",
                     hint="Ensure the product exists before ordering.",
                 )
-            enriched_items.append({
-                "sku": item["sku"],
-                "qty": item["qty"],
-                "unitPrice": product["price"],
-            })
+            enriched_items.append(
+                {
+                    "sku": item["sku"],
+                    "qty": item["qty"],
+                    "unitPrice": product["price"],
+                }
+            )
 
         order: dict[str, Any] = {
             "userId": user_id,
@@ -171,10 +170,10 @@ class MongoShopApp:
                 "address": shipping_address,
             },
             "items": enriched_items,
-            "createdAt": datetime.now(tz=timezone.utc),
+            "createdAt": datetime.now(tz=UTC),
         }
         if coupon_code is not None:
             order["couponCode"] = coupon_code
 
         result = self.orders.insert_one(order)
-        return result.inserted_id
+        return ObjectId(str(result.inserted_id))

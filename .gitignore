@@ -34,7 +34,6 @@ coverage.xml
 .ruff_cache/
 
 workspace/out/
-workspace/llm_cache/
 *.sqlite
 *.sqlite3
 

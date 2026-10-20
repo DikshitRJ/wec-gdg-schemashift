@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
 from schemashift.assist.annotate_scripts import annotate_scripts
 from schemashift.config import Settings
 from schemashift.contracts.schema_map import SchemaMap

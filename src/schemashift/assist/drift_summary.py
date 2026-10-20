@@ -6,6 +6,7 @@ Spec: llm-assist/drift-summary
 from __future__ import annotations
 
 from pathlib import Path
+
 from schemashift.assist.fallbacks import fallback_drift_summary
 from schemashift.contracts.llm import ExplanationNote
 from schemashift.contracts.verify import VerifyReport

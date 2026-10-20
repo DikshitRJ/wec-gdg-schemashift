@@ -7,9 +7,10 @@ from __future__ import annotations
 
 import py_compile
 from pathlib import Path
-from schemashift.contracts.schema_map import SchemaMap, Table
+
+from schemashift.contracts.schema_map import SchemaMap
 from schemashift.gen.header import make_python_header
-from schemashift.identifiers import quote_ident, singularize, snake_case
+from schemashift.identifiers import snake_case
 from schemashift.orm.naming import column_to_attr_name, pg_type_to_python_type, table_to_class_name
 
 
@@ -28,7 +29,7 @@ def generate_orm_package(
         header,
         '"""Database connection and session factory.',
         "",
-        'Spec: orm/db',
+        "Spec: orm/db",
         '"""',
         "",
         "import os",
@@ -62,7 +63,7 @@ def generate_orm_package(
         header,
         '"""SQLAlchemy 2.0 Declarative Models.',
         "",
-        'Spec: orm/models',
+        "Spec: orm/models",
         '"""',
         "",
         "from __future__ import annotations",
@@ -86,21 +87,23 @@ def generate_orm_package(
             attr_name = column_to_attr_name(col.name)
             py_type, sa_type = pg_type_to_python_type(col.pg_type)
 
-            kw_args: list[str] = [f'name="{col.name}"']
+            args: list[str] = [sa_type]
+            kwargs: list[str] = [f'name="{col.name}"']
             if col.name in table.primary_key:
-                kw_args.append("primary_key=True")
+                kwargs.append("primary_key=True")
             if not col.nullable and col.name not in table.primary_key:
-                kw_args.append("nullable=False")
+                kwargs.append("nullable=False")
             if col.nullable and col.name not in table.primary_key:
-                kw_args.append("nullable=True")
+                kwargs.append("nullable=True")
 
             # Check if this column is a foreign key
             fk_spec = next((fk for fk in table.foreign_keys if col.name in fk.columns), None)
             if fk_spec:
-                kw_args.append(f'ForeignKey("{fk_spec.ref_table}.{fk_spec.ref_columns[0]}")')
+                args.append(f'ForeignKey("{fk_spec.ref_table}.{fk_spec.ref_columns[0]}")')
 
+            call_args = ", ".join(args + kwargs)
             type_hint = f"Mapped[{py_type}]" if not col.nullable else f"Mapped[Optional[{py_type}]]"
-            line = f"    {attr_name}: {type_hint} = mapped_column({sa_type}, {', '.join(kw_args)})"
+            line = f"    {attr_name}: {type_hint} = mapped_column({call_args})"
             if col.pg_type == "JSONB" or col.transform == "int_coerce":
                 line += "  # REVIEW: Check JSONB / type coercion"
             models_lines.append(line)
@@ -123,7 +126,7 @@ def generate_orm_package(
         header,
         '"""Data repositories providing CRUD operations for root entities.',
         "",
-        'Spec: orm/repositories',
+        "Spec: orm/repositories",
         '"""',
         "",
         "from __future__ import annotations",
@@ -139,33 +142,35 @@ def generate_orm_package(
         cls_name = table_to_class_name(table.name)
         repo_name = f"{cls_name}Repository"
 
-        repos_lines.extend([
-            f"class {repo_name}:",
-            "    def __init__(self, db: Session) -> None:",
-            "        self.db = db",
-            "",
-            f"    def get(self, id_: str) -> Optional[models.{cls_name}]:",
-            f"        return self.db.query(models.{cls_name}).filter(models.{cls_name}.id == id_).first()",
-            "",
-            f"    def list(self, limit: int = 100, offset: int = 0) -> List[models.{cls_name}]:",
-            f"        return self.db.query(models.{cls_name}).offset(offset).limit(limit).all()",
-            "",
-            f"    def create(self, **kwargs: Any) -> models.{cls_name}:",
-            f"        obj = models.{cls_name}(**kwargs)",
-            "        self.db.add(obj)",
-            "        self.db.commit()",
-            "        self.db.refresh(obj)",
-            "        return obj",
-            "",
-            f"    def delete(self, id_: str) -> bool:",
-            f"        obj = self.get(id_)",
-            "        if obj:",
-            "            self.db.delete(obj)",
-            "            self.db.commit()",
-            "            return True",
-            "        return False",
-            "",
-        ])
+        repos_lines.extend(
+            [
+                f"class {repo_name}:",
+                "    def __init__(self, db: Session) -> None:",
+                "        self.db = db",
+                "",
+                f"    def get(self, id_: str) -> Optional[models.{cls_name}]:",
+                f"        return self.db.query(models.{cls_name}).filter(models.{cls_name}.id == id_).first()",
+                "",
+                f"    def list(self, limit: int = 100, offset: int = 0) -> List[models.{cls_name}]:",
+                f"        return self.db.query(models.{cls_name}).offset(offset).limit(limit).all()",
+                "",
+                f"    def create(self, **kwargs: Any) -> models.{cls_name}:",
+                f"        obj = models.{cls_name}(**kwargs)",
+                "        self.db.add(obj)",
+                "        self.db.commit()",
+                "        self.db.refresh(obj)",
+                "        return obj",
+                "",
+                "    def delete(self, id_: str) -> bool:",
+                "        obj = self.get(id_)",
+                "        if obj:",
+                "            self.db.delete(obj)",
+                "            self.db.commit()",
+                "            return True",
+                "        return False",
+                "",
+            ]
+        )
 
     repos_file = orm_dir / "repositories.py"
     repos_file.write_text("\n".join(repos_lines), encoding="utf-8")
@@ -175,24 +180,54 @@ def generate_orm_package(
         header,
         '"""Executable smoke script demonstrating CRUD operations with generated ORM.',
         "",
-        'Spec: orm/crud-demo',
+        "Spec: orm/crud-demo",
         '"""',
         "",
         "import sys",
+        "from datetime import datetime, timezone",
+        "from pathlib import Path",
         "from bson import ObjectId",
-        "from .db import SessionLocal",
-        "from .repositories import UsersRepository",
+        "",
+        "_HERE = Path(__file__).resolve().parent",
+        "if str(_HERE.parent) not in sys.path:",
+        "    sys.path.insert(0, str(_HERE.parent))",
+        "if str(_HERE) not in sys.path:",
+        "    sys.path.insert(0, str(_HERE))",
+        "",
+        "try:",
+        "    from orm.db import SessionLocal",
+        "    from orm.repositories import UserRepository",
+        "except ImportError:",
+        "    try:",
+        "        from .db import SessionLocal",
+        "        from .repositories import UserRepository",
+        "    except (ImportError, ValueError):",
+        "        from db import SessionLocal",
+        "        from repositories import UserRepository",
         "",
         "def main():",
         "    db = SessionLocal()",
         "    try:",
-        "        repo = UsersRepository(db)",
+        "        repo = UserRepository(db)",
         "        # Test list",
         "        users = repo.list(limit=5)",
         '        print(f"Listed {len(users)} users from PostgreSQL.")',
         "        # Test create",
         "        new_id = str(ObjectId())",
-        '        user = repo.create(id=new_id, email=f"smoke.{new_id[:6]}@example.com", name="Smoke Test")',
+        "        user = repo.create(",
+        "            id=new_id,",
+        '            email=f"smoke.{new_id[:6]}@example.com",',
+        '            name="Smoke Test",',
+        '            address_street="123 Test St",',
+        '            address_city="Springfield",',
+        '            address_state="IL",',
+        '            address_zip="62701",',
+        "            address_geo_lat=40.0,",
+        "            address_geo_lng=-89.0,",
+        "            prefs_newsletter=False,",
+        '            prefs_theme="dark",',
+        "            created_at=datetime.now(timezone.utc),",
+        "        )",
         '        print(f"Created user: {user.id}")',
         "        # Test get",
         "        fetched = repo.get(new_id)",
@@ -219,7 +254,7 @@ def generate_orm_package(
         header,
         '"""Generated SQLAlchemy 2.0 ORM package.',
         "",
-        'Spec: orm/package-init',
+        "Spec: orm/package-init",
         '"""',
         "",
         "from .db import Base, SessionLocal, engine, get_db",

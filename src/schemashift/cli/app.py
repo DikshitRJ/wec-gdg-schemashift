@@ -8,22 +8,10 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import Any
 
 import typer
-from rich.console import Console
 
-from schemashift.config import Settings
-from schemashift.contracts.schema_map import SchemaMap
-from schemashift.contracts.similarity import SimilarityReport
-from schemashift.errors import (
-    ConfigurationError,
-    GateRejectedError,
-    MigrationError,
-    SchemaShiftError,
-    VerificationError,
-)
-from schemashift.graph.runner import MigrationRunner
 from schemashift.cli.prompts import prompt_approval
 from schemashift.cli.tui import (
     console,
@@ -31,6 +19,15 @@ from schemashift.cli.tui import (
     render_node_badge,
     render_similarity_table,
 )
+from schemashift.config import Settings
+from schemashift.contracts.similarity import SimilarityReport
+from schemashift.errors import (
+    ConfigurationError,
+    GateRejectedError,
+    MigrationError,
+    VerificationError,
+)
+from schemashift.graph.runner import MigrationRunner
 
 app = typer.Typer(
     name="schemashift",
@@ -43,15 +40,18 @@ app = typer.Typer(
 def seed(
     uri: str = typer.Option("mongodb://localhost:27017", help="MongoDB connection URI"),
     db: str = typer.Option("shop", help="Target database name"),
-    inject: Optional[str] = typer.Option(None, help="Inject failure flag (orphan_review, bad_date, uncoercible_rating)"),
+    inject: str | None = typer.Option(
+        None, help="Inject failure flag (orphan_review, bad_date, uncoercible_rating)"
+    ),
 ) -> None:
     """Seed MongoDB with realistic deterministic nested shop data."""
     from pymongo import MongoClient
+
     from schemashift.seed.shop import seed_shop
 
     inject_set = {inject} if inject else set()
     console.print(f"[bold cyan]Connecting to MongoDB at {uri} (db: {db})...[/]")
-    client = MongoClient(uri)
+    client: MongoClient[dict[str, Any]] = MongoClient(uri)
     counts = seed_shop(client, db_name=db, inject=inject_set)
     console.print("[bold green]Deterministic seed complete:[/]")
     for coll, count in counts.items():
@@ -63,14 +63,16 @@ def run(
     config: str = typer.Option("workspace/schemashift.yaml", help="Path to config file"),
     ci: bool = typer.Option(False, help="Run in non-interactive CI mode"),
     provider: str = typer.Option("none", help="LLM provider: none | replay | openai"),
-    run_id: Optional[str] = typer.Option(None, help="Custom execution run ID"),
+    run_id: str | None = typer.Option(None, help="Custom execution run ID"),
 ) -> None:
     """Run full hybrid migration pipeline end-to-end."""
     runner = MigrationRunner()
     current_run_id = run_id
 
     try:
-        stream = runner.run(config_path=config, ci_mode=ci, provider=provider, run_id=current_run_id)
+        stream = runner.run(
+            config_path=config, ci_mode=ci, provider=provider, run_id=current_run_id
+        )
         for update in stream:
             ev = update.get("event")
             if ev == "update":
@@ -83,11 +85,13 @@ def run(
                         if node_name == "similarity_report" and "similarity_path" in node_val:
                             rep_path = Path(node_val["similarity_path"])
                             if rep_path.exists():
-                                rep = SimilarityReport.model_validate(json.loads(rep_path.read_text(encoding="utf-8")))
+                                rep = SimilarityReport.model_validate(
+                                    json.loads(rep_path.read_text(encoding="utf-8"))
+                                )
                                 render_similarity_table(rep)
 
             elif ev == "complete":
-                final_state = update.get("state", {})
+                update.get("state", {})
                 current_run_id = update.get("run_id")
 
                 # Check if paused at interrupt (gate)
@@ -107,7 +111,10 @@ def run(
                         action, overrides = prompt_approval(items)
 
                         console.print(f"[bold cyan]Resuming pipeline with action={action}...[/]")
-                        resume_stream = runner.resume(current_run_id, action=action, overrides=overrides)
+                        assert current_run_id is not None
+                        resume_stream = runner.resume(
+                            current_run_id, action=action, overrides=overrides
+                        )
                         for r_update in resume_stream:
                             if r_update.get("event") == "update":
                                 for r_node, r_val in r_update.get("data", {}).items():
@@ -145,11 +152,12 @@ def inspect(
     config: str = typer.Option("workspace/schemashift.yaml", help="Path to config file"),
 ) -> None:
     """Inspect and profile MongoDB source database."""
-    from schemashift.inspection.profile import build_profile, write_profile
     from pymongo import MongoClient
 
+    from schemashift.inspection.profile import build_profile, write_profile
+
     settings = Settings.load(config)
-    client = MongoClient(settings.source.uri)
+    client: MongoClient[dict[str, Any]] = MongoClient(settings.source.uri)
     prof = build_profile(client, settings.source.database, settings.sampling.size)
     path = write_profile(prof, settings.paths.out)
     console.print(f"[bold green]Inspection profile written to:[/] {path}")

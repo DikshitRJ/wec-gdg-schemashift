@@ -6,6 +6,7 @@ Spec: similarity/scoring
 from __future__ import annotations
 
 from rapidfuzz import distance, fuzz
+
 from schemashift.config import ScoringConfig
 from schemashift.contracts.profile import FieldProfile
 from schemashift.contracts.schema_map import Column, Table
@@ -70,7 +71,9 @@ def score_field(
     src_fam = normalize_type(dominant_bson)
     tgt_fam = normalize_type(column.pg_type)
 
-    base_type_compat = _COMPATIBILITY_MATRIX.get((src_fam, tgt_fam), 0.5 if src_fam == tgt_fam else 0.3)
+    base_type_compat = _COMPATIBILITY_MATRIX.get(
+        (src_fam, tgt_fam), 0.5 if src_fam == tgt_fam else 0.3
+    )
     type_score = round(base_type_compat * purity, 4)
 
     # 3. Structure score

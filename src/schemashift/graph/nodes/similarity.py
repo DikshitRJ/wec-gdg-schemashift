@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
 from schemashift.assist.explain_similarity import explain_similarity
 from schemashift.config import Settings
 from schemashift.contracts.profile import SourceProfile

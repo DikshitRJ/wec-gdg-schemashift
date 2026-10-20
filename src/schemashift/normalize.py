@@ -5,7 +5,6 @@ Spec: similarity/normalize
 
 from __future__ import annotations
 
-import re
 from schemashift.identifiers import singularize, snake_case
 
 _STOP_TOKENS = {"id", "mongo", "bson", "field", "col", "column"}

@@ -1,0 +1,7 @@
+{
+  "key": "2d7dc0ec7eaae005cb537f17911ca4eee16544784a3c5a6d27d7a8d707f78002",
+  "provider": "openai",
+  "model": "claude-sonnet-4-6",
+  "prompt": "Review this target SQL schema with tables ['orders', 'orders_items', 'products', 'products_categories', 'reviews', 'users', 'users_tags'].\nHighlight potential migration risks (e.g. data loss, foreign key ordering, type truncations).\nReturn ScriptAnnotation JSON.",
+  "response": "{\"risk_level\": \"low\", \"notes\": [\"DDL creates tables with foreign keys and unique constraints.\", \"ETL migrates collections in topological dependency order.\"], \"summary\": \"Low risk migration scripts generated deterministically.\"}"
+}

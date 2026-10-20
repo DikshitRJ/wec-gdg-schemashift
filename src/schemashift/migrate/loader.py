@@ -5,17 +5,17 @@ Spec: migrate/loader
 
 from __future__ import annotations
 
-import time
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
+
 import psycopg
 from pymongo import MongoClient
 
-from schemashift.contracts.schema_map import SchemaMap, Table
+from schemashift.contracts.schema_map import SchemaMap
 from schemashift.errors import MigrationError
 from schemashift.gen.etl_plan import generate_etl_plan
 from schemashift.identifiers import quote_ident
 from schemashift.migrate.failures import RowFailure, write_failures_report
-from schemashift.migrate.ordering import get_table_topological_order
 from schemashift.migrate.transforms import TransformError, apply_transform
 
 ProgressCallback = Callable[[str, int, int], None]  # (table_name, loaded_rows, total_rows)
@@ -65,7 +65,7 @@ class DataLoader:
         etl_plan = generate_etl_plan(self.schema_map)
         ordered_tables = etl_plan["tables"]
 
-        mongo_client = MongoClient(self.mongo_uri)
+        mongo_client: MongoClient[dict[str, Any]] = MongoClient(self.mongo_uri)
         db = mongo_client[self.schema_map.source.database]
 
         # Check target tables & truncate if requested
@@ -74,13 +74,13 @@ class DataLoader:
                 for tbl in ordered_tables:
                     tbl_name = tbl["name"]
                     cur.execute(f"SELECT count(*) FROM {quote_ident(tbl_name)}")
-                    row_cnt = cur.fetchone()[0]
-                    if row_cnt > 0:
-                        if not self.truncate:
-                            raise MigrationError(
-                                f"Target table '{tbl_name}' is not empty ({row_cnt} rows).",
-                                hint="Pass --truncate to allow clearing target tables before migration.",
-                            )
+                    row = cur.fetchone()
+                    row_cnt = row[0] if row else 0
+                    if row_cnt > 0 and not self.truncate:
+                        raise MigrationError(
+                            f"Target table '{tbl_name}' is not empty ({row_cnt} rows).",
+                            hint="Pass --truncate to allow clearing target tables before migration.",
+                        )
 
             if self.truncate:
                 with conn.cursor() as cur:
@@ -216,10 +216,14 @@ class DataLoader:
                                     break
                             else:
                                 # Array of objects
-                                leaf_prop = c["source_path"].split(".")[-1] if c["source_path"] else c_name
+                                leaf_prop = (
+                                    c["source_path"].split(".")[-1] if c["source_path"] else c_name
+                                )
                                 raw_v = item.get(leaf_prop) if isinstance(item, dict) else None
                                 try:
-                                    v = apply_transform(c["transform"], raw_v, path=c["source_path"])
+                                    v = apply_transform(
+                                        c["transform"], raw_v, path=c["source_path"]
+                                    )
                                     row_vals.append(v)
                                 except TransformError as te:
                                     self.failures.append(

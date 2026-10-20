@@ -5,11 +5,12 @@ Spec: infer/nesting
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
+
 from schemashift.contracts.profile import FieldProfile
 
 
-class NestingStrategy(str, Enum):
+class NestingStrategy(StrEnum):
     FLATTEN = "flatten"
     CHILD_TABLE = "child_table"
     JSONB = "jsonb"
@@ -26,7 +27,8 @@ def decide_nesting_strategy(
     if field.is_array:
         # Scalar array vs object array
         has_object_elements = any(
-            cf.path.startswith(f"{field.path}[]") and (cf.is_object or "." in cf.path[len(field.path) + 2 :])
+            cf.path.startswith(f"{field.path}[]")
+            and (cf.is_object or "." in cf.path[len(field.path) + 2 :])
             for cf in child_fields
         )
         if has_object_elements:

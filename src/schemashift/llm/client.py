@@ -5,7 +5,8 @@ Spec: llm-assist/client
 
 from __future__ import annotations
 
-from typing import Type, TypeVar
+from typing import TypeVar
+
 from pydantic import BaseModel
 
 from schemashift.config import LLMConfig
@@ -22,7 +23,7 @@ class LLMClient:
     def __init__(self, provider: BaseProvider) -> None:
         self._provider = provider
 
-    def complete(self, prompt: str, schema: Type[T]) -> T | None:
+    def complete(self, prompt: str, schema: type[T]) -> T | None:
         """Query LLM and parse into Pydantic model *schema*, or return None."""
         return self._provider.complete(prompt, schema)
 

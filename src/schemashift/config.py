@@ -12,18 +12,19 @@ from typing import Any
 
 import yaml
 from pydantic import BaseModel, Field
-from pydantic_settings import BaseSettings
 
 
 def _interpolate_env(value: Any) -> Any:
     """Recursively interpolate ${VAR} and ${VAR:-default} in strings."""
     if isinstance(value, str):
-        def _replace(m: re.Match) -> str:
+
+        def _replace(m: re.Match[str]) -> str:
             var = m.group(1)
             if ":-" in var:
                 name, default = var.split(":-", 1)
-                return os.environ.get(name, default)
-            return os.environ.get(var, m.group(0))
+                return str(os.environ.get(name, default))
+            return str(os.environ.get(var, m.group(0)))
+
         return re.sub(r"\$\{([^}]+)\}", _replace, value)
     if isinstance(value, dict):
         return {k: _interpolate_env(v) for k, v in value.items()}
@@ -101,7 +102,7 @@ class Settings(BaseModel):
     paths: PathsConfig = PathsConfig()
 
     @classmethod
-    def load(cls, config_path: str | Path = "workspace/schemashift.yaml") -> "Settings":
+    def load(cls, config_path: str | Path = "workspace/schemashift.yaml") -> Settings:
         """Load settings from YAML with environment interpolation."""
         path = Path(config_path)
         if path.exists():
@@ -124,9 +125,7 @@ class Settings(BaseModel):
         if "source" not in data:
             data["source"] = {}
         if not data["source"].get("uri"):
-            data["source"]["uri"] = os.environ.get(
-                "MONGO_URI", "mongodb://localhost:27017"
-            )
+            data["source"]["uri"] = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
         if "target" not in data:
             data["target"] = {}
         if not data["target"].get("uri"):

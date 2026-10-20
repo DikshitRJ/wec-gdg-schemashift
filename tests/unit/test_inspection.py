@@ -4,6 +4,7 @@ Spec: inspect/unit-test
 """
 
 from bson import ObjectId
+
 from schemashift.contracts.profile import FieldProfile
 from schemashift.inspection.redact import redact_examples
 from schemashift.inspection.typestats import compute_field_stats

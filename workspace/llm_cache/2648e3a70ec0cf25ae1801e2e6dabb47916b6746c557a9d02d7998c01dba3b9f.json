@@ -1,0 +1,7 @@
+{
+  "key": "2648e3a70ec0cf25ae1801e2e6dabb47916b6746c557a9d02d7998c01dba3b9f",
+  "provider": "replay",
+  "model": "claude-sonnet-4-6",
+  "prompt": "Explain why this database migration has a match percentage of 93.5%.\nTop drag fields: ['userId', 'userId', 'tags[]', 'rating', 'categories[]']\nReturn ExplanationNote JSON with section and text fields.",
+  "response": "{\"section\": \"similarity\", \"text\": \"Mongo and SQL schemas match closely with normalized foreign keys.\", \"ambiguous_pairs\": []}"
+}

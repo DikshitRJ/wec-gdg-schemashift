@@ -1,0 +1,7 @@
+{
+  "key": "01f08ff88cb2c9b0695a482d1011bd38ee1f1b7ce4613fef7088f03578dee4c3",
+  "provider": "openai",
+  "model": "claude-sonnet-4-6",
+  "prompt": "Given the following MongoDB collections and fields, propose SQL table or column name cleanups if appropriate.\nData: {\"database\": \"shop\", \"collections\": [{\"name\": \"orders\", \"fields\": [\"_id\", \"couponCode\", \"createdAt\", \"items\", \"items[]\", \"items[].qty\", \"items[].sku\", \"items[].unitPrice\", \"shipping\", \"shipping.address\", \"shipping.address.city\", \"shipping.address.state\", \"shipping.address.street\", \"shipping.address.zip\", \"shipping.carrier\"]}, {\"name\": \"products\", \"fields\": [\"_id\", \"attrs\", \"attrs.brand\", \"attrs.color\", \"attrs.dimensions\", \"attrs.material\", \"attrs.origin\", \"attrs.voltage\", \"attrs.warranty_months\", \"attrs.weight_kg\", \"categories\", \"categories[]\", \"description\", \"inStock\", \"name\"]}, {\"name\": \"reviews\", \"fields\": [\"_id\", \"body\", \"createdAt\", \"productSku\", \"rating\", \"title\", \"userId\"]}, {\"name\": \"users\", \"fields\": [\"_id\", \"address\", \"address.city\", \"address.geo\", \"address.geo.lat\", \"address.geo.lng\", \"address.state\", \"address.street\", \"address.zip\", \"createdAt\", \"email\", \"name\", \"prefs\", \"prefs.newsletter\", \"prefs.theme\"]}]}\nReturn SchemaProposal JSON with a list of proposals.",
+  "response": "{\"proposals\": []}"
+}

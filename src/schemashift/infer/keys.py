@@ -22,13 +22,16 @@ def detect_indexes_and_uniques(
             col_name = column_mapping[field.path]
             # Check if name contains hint
             leaf_name = field.path.split(".")[-1].lower()
-            if any(h in leaf_name for h in unique_hints) or field.is_unique:
-                if field.presence_rate >= 0.98:
-                    indexes.append(
-                        Index(
-                            columns=[col_name],
-                            unique=True,
-                        )
+            if (
+                field.is_unique
+                and any(h in leaf_name for h in unique_hints)
+                and field.presence_rate >= 0.98
+            ):
+                indexes.append(
+                    Index(
+                        columns=[col_name],
+                        unique=True,
                     )
+                )
 
     return indexes

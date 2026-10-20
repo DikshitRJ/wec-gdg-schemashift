@@ -3,6 +3,17 @@
 Spec: foundation/contracts-init
 """
 
+from schemashift.contracts.llm import (
+    ExplanationNote,
+    ProposedDecision,
+    RemapPatch,
+    SchemaProposal,
+)
+from schemashift.contracts.profile import (
+    CollectionProfile,
+    FieldProfile,
+    SourceProfile,
+)
 from schemashift.contracts.schema_map import (
     ApprovalRecord,
     Column,
@@ -13,25 +24,14 @@ from schemashift.contracts.schema_map import (
     SourceInfo,
     Table,
 )
-from schemashift.contracts.profile import (
-    CollectionProfile,
-    FieldProfile,
-    SourceProfile,
-)
 from schemashift.contracts.similarity import (
     Band,
     EntityScore,
     FieldScore,
     SimilarityReport,
 )
-from schemashift.contracts.verify import CheckResult, VerifyReport
-from schemashift.contracts.llm import (
-    ExplanationNote,
-    RemapPatch,
-    SchemaProposal,
-    ProposedDecision,
-)
 from schemashift.contracts.state import GraphState
+from schemashift.contracts.verify import CheckResult, VerifyReport
 
 __all__ = [
     "ApprovalRecord",

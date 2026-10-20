@@ -18,13 +18,7 @@ SPEC_HEADER_RE = re.compile(r"Spec:\s*([\w\-]+)/([\w\-]+)", re.MULTILINE)
 
 def get_source_files() -> list[Path]:
     """Find all python files in src/schemashift."""
-    return sorted(
-        [
-            p
-            for p in SRC_DIR.rglob("*.py")
-            if not p.name.startswith(".")
-        ]
-    )
+    return sorted([p for p in SRC_DIR.rglob("*.py") if not p.name.startswith(".")])
 
 
 def extract_spec_header(path: Path) -> tuple[str, str] | None:

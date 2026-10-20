@@ -6,6 +6,7 @@ Spec: llm-assist/suggest-schema
 from __future__ import annotations
 
 import json
+
 from schemashift.assist.fallbacks import fallback_schema_proposal
 from schemashift.contracts.llm import SchemaProposal
 from schemashift.contracts.profile import SourceProfile

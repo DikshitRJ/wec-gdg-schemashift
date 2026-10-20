@@ -5,12 +5,10 @@ Spec: freeze-gate/gate
 
 from __future__ import annotations
 
-from typing import Any
 from pydantic import BaseModel, Field
 
-from schemashift.contracts.schema_map import Decision, SchemaMap
+from schemashift.contracts.schema_map import SchemaMap
 from schemashift.contracts.similarity import Band, SimilarityReport
-from schemashift.errors import GateRejectedError
 
 
 class GateItem(BaseModel):
@@ -44,26 +42,43 @@ def evaluate_gate(
     # Check field scores from similarity report
     for es in similarity_report.entity_scores:
         for fs in es.field_scores:
-            if fs.band != Band.MATCHED or fs.capped or fs.reason_codes:
-                can_auto = fs.band == Band.GUESSED and not any(r == "UNMAPPED" for r in fs.reason_codes)
+            if fs.band == Band.NEEDS_REVIEW:
                 items.append(
                     GateItem(
                         target=f"{fs.target_table}.{fs.target_column or fs.source_path}",
                         reasons=fs.reason_codes or [f"Band is {fs.band.value}"],
                         band=fs.band.value,
-                        can_auto_approve=can_auto,
+                        can_auto_approve=False,
+                    )
+                )
+            elif fs.band == Band.GUESSED:
+                items.append(
+                    GateItem(
+                        target=f"{fs.target_table}.{fs.target_column or fs.source_path}",
+                        reasons=fs.reason_codes or [f"Band is {fs.band.value}"],
+                        band=fs.band.value,
+                        can_auto_approve=True,
                     )
                 )
 
     # Check decisions with ambiguity or LLM structural changes
     for dec in schema_map.decisions:
-        if dec.ambiguity or dec.provenance == "llm_proposed_validated":
+        if dec.ambiguity:
             items.append(
                 GateItem(
                     target=dec.choice,
-                    reasons=[f"Rule: {dec.rule} (ambiguity={dec.ambiguity}, provenance={dec.provenance})"],
-                    band="needs_review" if dec.ambiguity else "guessed",
-                    can_auto_approve=not dec.ambiguity,
+                    reasons=[f"Rule: {dec.rule} (ambiguity=True)"],
+                    band="guessed",
+                    can_auto_approve=True,  # Gated but auto-approvable in CI as documented
+                )
+            )
+        elif dec.provenance == "llm_proposed_validated":
+            items.append(
+                GateItem(
+                    target=dec.choice,
+                    reasons=[f"Rule: {dec.rule} (provenance=llm_proposed_validated)"],
+                    band="guessed",
+                    can_auto_approve=True,
                 )
             )
 

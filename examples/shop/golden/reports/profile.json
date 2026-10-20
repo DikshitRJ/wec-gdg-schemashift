@@ -1,0 +1,1788 @@
+{
+  "collections": [
+    {
+      "doc_count": 500,
+      "fields": [
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 500,
+          "examples": [
+            "00386f4e7dbf6b15dfafda98",
+            "0147ba90f921ee8db7dac790",
+            "01e649740092b06f45772ac5"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "_id",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "objectId": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 5,
+          "examples": [
+            "WELCOME",
+            "VIP15",
+            "SUMMER20"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "couponCode",
+          "presence_rate": 0.198,
+          "string_lengths": {
+            "max": 8,
+            "mean": 6.6,
+            "min": 5
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 99
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 500,
+          "examples": [
+            "2024-03-03 07:22:40",
+            "2024-12-03 14:09:24",
+            "2024-02-22 14:31:27"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "createdAt",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "date": 500
+          }
+        },
+        {
+          "array_lengths": {
+            "max": 5.0,
+            "mean": 3.01,
+            "min": 1.0
+          },
+          "decimal_digits": 0,
+          "distinct_estimate": 492,
+          "examples": [
+            [
+              {
+                "qty": 3,
+                "sku": "SKU-0043",
+                "unitPrice": "737.46"
+              },
+              {
+                "qty": 9,
+                "sku": "SKU-0007",
+                "unitPrice": "163.63"
+              }
+            ],
+            [
+              {
+                "qty": 3,
+                "sku": "SKU-0027",
+                "unitPrice": "878.55"
+              },
+              {
+                "qty": 8,
+                "sku": "SKU-0040",
+                "unitPrice": "138.15"
+              },
+              {
+                "qty": 5,
+                "sku": "SKU-0016",
+                "unitPrice": "851.94"
+              },
+              {
+                "qty": 2,
+                "sku": "SKU-0049",
+                "unitPrice": "556.55"
+              }
+            ],
+            [
+              {
+                "qty": 6,
+                "sku": "SKU-0035",
+                "unitPrice": "492.49"
+              },
+              {
+                "qty": 6,
+                "sku": "SKU-0033",
+                "unitPrice": "279.95"
+              },
+              {
+                "qty": 10,
+                "sku": "SKU-0035",
+                "unitPrice": "492.49"
+              },
+              {
+                "qty": 5,
+                "sku": "SKU-0003",
+                "unitPrice": "616.56"
+              }
+            ]
+          ],
+          "is_array": true,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "items",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "array": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 473,
+          "examples": [
+            {
+              "qty": 3,
+              "sku": "SKU-0043",
+              "unitPrice": "737.46"
+            },
+            {
+              "qty": 9,
+              "sku": "SKU-0007",
+              "unitPrice": "163.63"
+            },
+            {
+              "qty": 3,
+              "sku": "SKU-0027",
+              "unitPrice": "878.55"
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": false,
+          "key_set_signatures": [
+            "qty,sku,unitPrice"
+          ],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "items[]",
+          "presence_rate": 3.008,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "object": 1504
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 10,
+          "examples": [
+            3,
+            9,
+            3
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {
+            "max": 10.0,
+            "min": 1.0
+          },
+          "path": "items[].qty",
+          "presence_rate": 3.008,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "int": 1504
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 50,
+          "examples": [
+            "SKU-0043",
+            "SKU-0007",
+            "SKU-0027"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "items[].sku",
+          "presence_rate": 3.008,
+          "string_lengths": {
+            "max": 8,
+            "mean": 8.0,
+            "min": 8
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 1504
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 2,
+          "distinct_estimate": 50,
+          "examples": [
+            "737.46",
+            "163.63",
+            "878.55"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {
+            "max": 924.37,
+            "min": 58.33
+          },
+          "path": "items[].unitPrice",
+          "presence_rate": 3.008,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "decimal": 1504
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 500,
+          "examples": [
+            {
+              "address": {
+                "city": "Greenville",
+                "state": "TN",
+                "street": "9414 Cedar Ln",
+                "zip": "53872"
+              },
+              "carrier": "DHL",
+              "trackingNo": "056BZRU9O4RR"
+            },
+            {
+              "address": {
+                "city": "Fairview",
+                "state": "MA",
+                "street": "4854 Pine Rd",
+                "zip": "93643"
+              },
+              "carrier": "UPS",
+              "trackingNo": "BXGV12WZNXX6"
+            },
+            {
+              "address": {
+                "city": "Madison",
+                "state": "WI",
+                "street": "4845 Cedar Ln",
+                "zip": "23685"
+              },
+              "carrier": "DHL",
+              "trackingNo": "8ESVYS2SP2AH"
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": true,
+          "key_set_signatures": [
+            "address,carrier,trackingNo"
+          ],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "object": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 500,
+          "examples": [
+            {
+              "city": "Greenville",
+              "state": "TN",
+              "street": "9414 Cedar Ln",
+              "zip": "53872"
+            },
+            {
+              "city": "Fairview",
+              "state": "MA",
+              "street": "4854 Pine Rd",
+              "zip": "93643"
+            },
+            {
+              "city": "Madison",
+              "state": "WI",
+              "street": "4845 Cedar Ln",
+              "zip": "23685"
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": true,
+          "key_set_signatures": [
+            "city,state,street,zip"
+          ],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.address",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "object": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 10,
+          "examples": [
+            "Greenville",
+            "Fairview",
+            "Madison"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.address.city",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 11,
+            "mean": 8.39,
+            "min": 5
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 20,
+          "examples": [
+            "TN",
+            "MA",
+            "WI"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.address.state",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 2,
+            "mean": 2.0,
+            "min": 2
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 498,
+          "examples": [
+            "9414 Cedar Ln",
+            "4854 Pine Rd",
+            "4845 Cedar Ln"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.address.street",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 14,
+            "mean": 12.79,
+            "min": 10
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 499,
+          "examples": [
+            "53872",
+            "93643",
+            "23685"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.address.zip",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 5,
+            "mean": 5.0,
+            "min": 5
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 4,
+          "examples": [
+            "DHL",
+            "UPS",
+            "DHL"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.carrier",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 5,
+            "mean": 3.73,
+            "min": 3
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 500,
+          "examples": [
+            "056BZRU9O4RR",
+            "BXGV12WZNXX6",
+            "8ESVYS2SP2AH"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "shipping.trackingNo",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 12,
+            "mean": 12.0,
+            "min": 12
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 4,
+          "examples": [
+            "cancelled",
+            "shipped",
+            "cancelled"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "status",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 9,
+            "mean": 7.92,
+            "min": 7
+          },
+          "total_docs": 500,
+          "types": {
+            "string": 500
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 182,
+          "examples": [
+            "c561627f5bd436b7eada3555",
+            "370a183bd5e3c23f81f24e69",
+            "04dc957603bf60d2dfca7f53"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "userId",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 500,
+          "types": {
+            "objectId": 500
+          }
+        }
+      ],
+      "name": "orders",
+      "sample_count": 500
+    },
+    {
+      "doc_count": 50,
+      "fields": [
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 50,
+          "examples": [
+            "06d23235e4b370918062110c",
+            "10af2b4a4efdd3c479e1556b",
+            "1531b5dd8bab8a883282c8ec"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "_id",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 50,
+          "types": {
+            "objectId": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 48,
+          "examples": [
+            {
+              "color": "red"
+            },
+            {
+              "dimensions": "34x90x31cm",
+              "material": "glass",
+              "weight_kg": "4.6"
+            },
+            {
+              "brand": "GizmoCorp",
+              "color": "blue",
+              "dimensions": "68x56x2cm",
+              "material": "wood",
+              "origin": "Japan",
+              "voltage": "5V",
+              "warranty_months": "24",
+              "weight_kg": "24.0"
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": false,
+          "key_set_signatures": [
+            "brand,color",
+            "brand,color,dimensions,material,origin,voltage,warranty_months,weight_kg",
+            "brand,color,dimensions,material,origin,warranty_months,weight_kg",
+            "brand,color,dimensions,material,voltage",
+            "brand,color,dimensions,voltage,warranty_months,weight_kg",
+            "brand,color,dimensions,warranty_months,weight_kg",
+            "brand,color,material,warranty_months",
+            "brand,dimensions,material,origin",
+            "brand,dimensions,material,origin,voltage,warranty_months",
+            "brand,dimensions,material,origin,voltage,warranty_months,weight_kg",
+            "brand,dimensions,material,origin,voltage,weight_kg",
+            "brand,dimensions,origin",
+            "brand,dimensions,origin,voltage,warranty_months,weight_kg",
+            "brand,dimensions,weight_kg",
+            "brand,material,voltage",
+            "brand,origin,voltage,weight_kg",
+            "brand,origin,warranty_months",
+            "color",
+            "color,dimensions,material,origin",
+            "color,dimensions,material,origin,voltage,warranty_months,weight_kg",
+            "color,dimensions,material,origin,voltage,weight_kg",
+            "color,dimensions,material,origin,warranty_months,weight_kg",
+            "color,dimensions,material,voltage,warranty_months,weight_kg",
+            "color,dimensions,material,warranty_months",
+            "color,dimensions,origin,voltage,weight_kg",
+            "color,material,origin,voltage,warranty_months,weight_kg",
+            "color,material,voltage",
+            "color,origin",
+            "dimensions,material,weight_kg",
+            "dimensions,origin",
+            "material",
+            "origin",
+            "origin,warranty_months",
+            "voltage",
+            "voltage,warranty_months,weight_kg",
+            "voltage,weight_kg"
+          ],
+          "key_variance": 0.714286,
+          "numeric_range": {},
+          "path": "attrs",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 50,
+          "types": {
+            "object": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 4,
+          "examples": [
+            "GizmoCorp",
+            "GizmoCorp",
+            "GizmoCorp"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.brand",
+          "presence_rate": 0.44,
+          "string_lengths": {
+            "max": 9,
+            "mean": 7.64,
+            "min": 6
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 22
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 5,
+          "examples": [
+            "red",
+            "blue",
+            "black"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.color",
+          "presence_rate": 0.58,
+          "string_lengths": {
+            "max": 5,
+            "mean": 4.41,
+            "min": 3
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 29
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 29,
+          "examples": [
+            "34x90x31cm",
+            "68x56x2cm",
+            "47x56x26cm"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.dimensions",
+          "presence_rate": 0.58,
+          "string_lengths": {
+            "max": 10,
+            "mean": 9.83,
+            "min": 9
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 29
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 5,
+          "examples": [
+            "glass",
+            "wood",
+            "glass"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.material",
+          "presence_rate": 0.56,
+          "string_lengths": {
+            "max": 7,
+            "mean": 5.54,
+            "min": 4
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 28
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 5,
+          "examples": [
+            "Japan",
+            "USA",
+            "Mexico"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.origin",
+          "presence_rate": 0.58,
+          "string_lengths": {
+            "max": 7,
+            "mean": 4.97,
+            "min": 3
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 29
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 4,
+          "examples": [
+            "5V",
+            "220V",
+            "110V"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.voltage",
+          "presence_rate": 0.56,
+          "string_lengths": {
+            "max": 4,
+            "mean": 3.14,
+            "min": 2
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 28
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 4,
+          "examples": [
+            "24",
+            "6",
+            "36"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.warranty_months",
+          "presence_rate": 0.48,
+          "string_lengths": {
+            "max": 2,
+            "mean": 1.67,
+            "min": 1
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 24
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 26,
+          "examples": [
+            "4.6",
+            "24.0",
+            "7.3"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "attrs.weight_kg",
+          "presence_rate": 0.56,
+          "string_lengths": {
+            "max": 4,
+            "mean": 3.54,
+            "min": 3
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 28
+          }
+        },
+        {
+          "array_lengths": {
+            "max": 3.0,
+            "mean": 2.0,
+            "min": 1.0
+          },
+          "decimal_digits": 0,
+          "distinct_estimate": 36,
+          "examples": [
+            [
+              "food"
+            ],
+            [
+              "books",
+              "electronics"
+            ],
+            [
+              "food",
+              "sports",
+              "toys"
+            ]
+          ],
+          "is_array": true,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "categories",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 50,
+          "types": {
+            "array": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 10,
+          "examples": [
+            "food",
+            "books",
+            "electronics"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "categories[]",
+          "presence_rate": 2.0,
+          "string_lengths": {
+            "max": 11,
+            "mean": 6.39,
+            "min": 4
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 100
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 41,
+          "examples": [
+            "hash:99626e385b39",
+            "hash:1de1c26bf80a",
+            "hash:4bde0fd67a42"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "description",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 39,
+            "mean": 33.58,
+            "min": 29
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 2,
+          "examples": [
+            true,
+            true,
+            true
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "inStock",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 50,
+          "types": {
+            "bool": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 50,
+          "examples": [
+            "Mini Module 7",
+            "Deluxe Gizmo 5",
+            "Premium Gizmo 6"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "name",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 22,
+            "mean": 16.4,
+            "min": 12
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 2,
+          "distinct_estimate": 50,
+          "examples": [
+            "620.15",
+            "578.59",
+            "773.59"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {
+            "max": 924.37,
+            "min": 58.33
+          },
+          "path": "price",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 50,
+          "types": {
+            "decimal": 50
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 50,
+          "examples": [
+            "SKU-0006",
+            "SKU-0004",
+            "SKU-0005"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "sku",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 8,
+            "mean": 8.0,
+            "min": 8
+          },
+          "total_docs": 50,
+          "types": {
+            "string": 50
+          }
+        }
+      ],
+      "name": "products",
+      "sample_count": 50
+    },
+    {
+      "doc_count": 300,
+      "fields": [
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 300,
+          "examples": [
+            "001af01a36feb90e5a06be18",
+            "0082bf8e812009c732dfc887",
+            "01fb6fc6504c6165a4900678"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "_id",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 300,
+          "types": {
+            "objectId": 300
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 295,
+          "examples": [
+            "hash:8454d0c3b44a",
+            "hash:42edbb934148",
+            "hash:7f193136c02f"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "body",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 23,
+            "mean": 22.87,
+            "min": 21
+          },
+          "total_docs": 300,
+          "types": {
+            "string": 300
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 300,
+          "examples": [
+            "2024-08-06 21:48:59",
+            "2024-11-18 09:18:50",
+            "2024-10-11 04:35:21"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "createdAt",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 300,
+          "types": {
+            "date": 300
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 50,
+          "examples": [
+            "SKU-0009",
+            "SKU-0037",
+            "SKU-0012"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "productSku",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 8,
+            "mean": 8.0,
+            "min": 8
+          },
+          "total_docs": 300,
+          "types": {
+            "string": 300
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 10,
+          "examples": [
+            "5",
+            "2",
+            1
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {
+            "max": 5.0,
+            "min": 1.0
+          },
+          "path": "rating",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 1,
+            "mean": 1.0,
+            "min": 1
+          },
+          "total_docs": 300,
+          "types": {
+            "int": 254,
+            "string": 46
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 10,
+          "examples": [
+            "Terrible quality",
+            "Great product!",
+            "Perfect for me"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "title",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 21,
+            "mean": 13.53,
+            "min": 7
+          },
+          "total_docs": 300,
+          "types": {
+            "string": 300
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 151,
+          "examples": [
+            "2b3b48b29fafe969f7b2f331",
+            "6c624015d828de674b84a322",
+            "9fa72ce904bc66959b7cedbc"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "userId",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 300,
+          "types": {
+            "objectId": 300
+          }
+        }
+      ],
+      "name": "reviews",
+      "sample_count": 300
+    },
+    {
+      "doc_count": 200,
+      "fields": [
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            "0018c5e0d655d3fcc1b3c033",
+            "004b4ce795c7e46469a2999b",
+            "03689a6c468294a73d03fedc"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "_id",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "objectId": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            {
+              "city": "Madison",
+              "geo": {
+                "lat": 33.061067,
+                "lng": -81.7139
+              },
+              "state": "GA",
+              "street": "187 Maple Dr",
+              "zip": "18885"
+            },
+            {
+              "city": "Riverdale",
+              "geo": {
+                "lat": 45.407015,
+                "lng": -75.32092
+              },
+              "state": "OH",
+              "street": "8099 Main St",
+              "zip": "28208"
+            },
+            {
+              "city": "Georgetown",
+              "geo": {
+                "lat": 34.091058,
+                "lng": -92.037127
+              },
+              "state": "TX",
+              "street": "7973 Spruce Pl",
+              "zip": "38903"
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": true,
+          "key_set_signatures": [
+            "city,geo,state,street,zip"
+          ],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "address",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "object": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 10,
+          "examples": [
+            "Madison",
+            "Riverdale",
+            "Georgetown"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "address.city",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 11,
+            "mean": 8.26,
+            "min": 5
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            {
+              "lat": 33.061067,
+              "lng": -81.7139
+            },
+            {
+              "lat": 45.407015,
+              "lng": -75.32092
+            },
+            {
+              "lat": 34.091058,
+              "lng": -92.037127
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": true,
+          "key_set_signatures": [
+            "lat,lng"
+          ],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "address.geo",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "object": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            33.061067,
+            45.407015,
+            34.091058
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {
+            "max": 47.938493,
+            "min": 25.205387
+          },
+          "path": "address.geo.lat",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "double": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            -81.7139,
+            -75.32092,
+            -92.037127
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {
+            "max": -70.185269,
+            "min": -124.723359
+          },
+          "path": "address.geo.lng",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "double": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 20,
+          "examples": [
+            "GA",
+            "OH",
+            "TX"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "address.state",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 2,
+            "mean": 2.0,
+            "min": 2
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            "187 Maple Dr",
+            "8099 Main St",
+            "7973 Spruce Pl"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "address.street",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 14,
+            "mean": 12.63,
+            "min": 11
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            "18885",
+            "28208",
+            "38903"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "address.zip",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 5,
+            "mean": 5.0,
+            "min": 5
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            "2024-08-03 01:18:01",
+            "2024-01-20 16:25:54",
+            "2024-11-26 11:04:25"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "createdAt",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "date": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 200,
+          "examples": [
+            "hash:cc1945604184",
+            "hash:04f8d83d91fa",
+            "hash:47d60c9e8dac"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": true,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "email",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 30,
+            "mean": 25.3,
+            "min": 21
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 173,
+          "examples": [
+            "Karl Olson",
+            "Mallory Kim",
+            "Victor Smith"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "name",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 16,
+            "mean": 10.86,
+            "min": 6
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 6,
+          "examples": [
+            {
+              "newsletter": false,
+              "theme": "system"
+            },
+            {
+              "newsletter": false,
+              "theme": "system"
+            },
+            {
+              "newsletter": true,
+              "theme": "light"
+            }
+          ],
+          "is_array": false,
+          "is_object": true,
+          "is_unique": false,
+          "key_set_signatures": [
+            "newsletter,theme"
+          ],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "prefs",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "object": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 2,
+          "examples": [
+            false,
+            false,
+            true
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "prefs.newsletter",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "bool": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 3,
+          "examples": [
+            "system",
+            "system",
+            "light"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "prefs.theme",
+          "presence_rate": 1.0,
+          "string_lengths": {
+            "max": 6,
+            "mean": 5.04,
+            "min": 4
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 200
+          }
+        },
+        {
+          "array_lengths": {
+            "max": 3.0,
+            "mean": 1.48,
+            "min": 0.0
+          },
+          "decimal_digits": 0,
+          "distinct_estimate": 63,
+          "examples": [
+            [
+              "returning"
+            ],
+            [
+              "beta-tester",
+              "wholesale"
+            ],
+            [
+              "beta-tester",
+              "enterprise",
+              "new"
+            ]
+          ],
+          "is_array": true,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "tags",
+          "presence_rate": 1.0,
+          "string_lengths": {},
+          "total_docs": 200,
+          "types": {
+            "array": 200
+          }
+        },
+        {
+          "array_lengths": {},
+          "decimal_digits": 0,
+          "distinct_estimate": 8,
+          "examples": [
+            "returning",
+            "beta-tester",
+            "wholesale"
+          ],
+          "is_array": false,
+          "is_object": false,
+          "is_unique": false,
+          "key_set_signatures": [],
+          "key_variance": 0.0,
+          "numeric_range": {},
+          "path": "tags[]",
+          "presence_rate": 1.48,
+          "string_lengths": {
+            "max": 13,
+            "mean": 8.59,
+            "min": 3
+          },
+          "total_docs": 200,
+          "types": {
+            "string": 296
+          }
+        }
+      ],
+      "name": "users",
+      "sample_count": 200
+    }
+  ],
+  "database": "shop",
+  "sample_size": 1000
+}

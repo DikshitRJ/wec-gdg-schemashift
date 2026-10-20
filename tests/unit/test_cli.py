@@ -4,6 +4,7 @@ Spec: cli-tui/unit-test
 """
 
 from typer.testing import CliRunner
+
 from schemashift.cli.app import app
 
 runner = CliRunner()

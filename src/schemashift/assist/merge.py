@@ -6,7 +6,8 @@ Spec: llm-assist/merge
 from __future__ import annotations
 
 from rapidfuzz import fuzz
-from schemashift.contracts.llm import ProposedDecision, SchemaProposal
+
+from schemashift.contracts.llm import SchemaProposal
 from schemashift.contracts.schema_map import Decision, SchemaMap
 from schemashift.identifiers import safe_name
 
@@ -37,7 +38,7 @@ def merge_proposals(
                         tbl.name = new_name
                         schema_map.decisions.append(
                             Decision(
-                                id=f"D-llm-{len(schema_map.decisions)+1:03d}",
+                                id=f"D-llm-{len(schema_map.decisions) + 1:03d}",
                                 rule="LLM_TABLE_RENAME",
                                 choice=f"{curr_name}->{new_name}",
                                 evidence={"similarity": sim, "rationale": prop.rationale},
@@ -60,7 +61,7 @@ def merge_proposals(
                                 col.name = new_col
                                 schema_map.decisions.append(
                                     Decision(
-                                        id=f"D-llm-{len(schema_map.decisions)+1:03d}",
+                                        id=f"D-llm-{len(schema_map.decisions) + 1:03d}",
                                         rule="LLM_COLUMN_RENAME",
                                         choice=f"{tbl.name}.{col_name}->{new_col}",
                                         evidence={"similarity": sim, "rationale": prop.rationale},

@@ -5,8 +5,9 @@ Spec: tests/integration-conftest
 
 import os
 import time
-import pytest
+
 import psycopg
+import pytest
 from pymongo import MongoClient
 
 
@@ -23,16 +24,11 @@ def mongo_client():
     return client
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def pg_connection():
-    uri = os.environ.get("PG_URI", "postgresql://schemashift:schemashift@localhost:5432/schemashift")
-    conn = None
-    for _ in range(10):
-        try:
-            conn = psycopg.connect(uri)
-            break
-        except Exception:
-            time.sleep(1)
-    assert conn is not None
+    uri = os.environ.get(
+        "PG_URI", "postgresql://schemashift:schemashift@localhost:5432/schemashift"
+    )
+    conn = psycopg.connect(uri, autocommit=True)
     yield conn
     conn.close()

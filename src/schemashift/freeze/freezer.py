@@ -5,12 +5,12 @@ Spec: freeze-gate/freezer
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import stat
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
 
 from schemashift.contracts.schema_map import ApprovalRecord, SchemaMap
 from schemashift.errors import FreezeError
@@ -46,7 +46,7 @@ def freeze_map(
         with open(approvals_file, "a", encoding="utf-8") as f:
             for app in approvals:
                 if not app.timestamp:
-                    app.timestamp = datetime.now(timezone.utc).isoformat()
+                    app.timestamp = datetime.now(UTC).isoformat()
                 f.write(app.model_dump_json() + "\n")
 
     # 4. Atomic write to schema_map.frozen.json
@@ -55,10 +55,8 @@ def freeze_map(
 
     # If target exists and is read-only (chmod 444), remove write protection so we can overwrite
     if frozen_target.exists():
-        try:
+        with contextlib.suppress(OSError):
             frozen_target.chmod(stat.S_IWUSR | stat.S_IRUSR)
-        except OSError:
-            pass
 
     tmp_target.write_text(version_content, encoding="utf-8")
     tmp_target.chmod(stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)  # 0444 read-only

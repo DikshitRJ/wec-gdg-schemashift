@@ -4,6 +4,7 @@ Spec: foundation/config-test
 """
 
 import os
+
 from schemashift.config import Settings
 
 

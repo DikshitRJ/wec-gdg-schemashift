@@ -6,7 +6,7 @@ Spec: migrate/executor
 from __future__ import annotations
 
 import re
-from typing import Any
+
 import psycopg
 
 from schemashift.errors import MigrationError

@@ -4,12 +4,11 @@ Spec: freeze-gate/unit-test
 """
 
 import pytest
+
 from schemashift.contracts.schema_map import Column, Decision, SchemaMap, Table
-from schemashift.contracts.similarity import Band, EntityScore, FieldScore, SimilarityReport
 from schemashift.errors import FreezeError
-from schemashift.freeze.canonical import canonical_json, compute_map_hash
+from schemashift.freeze.canonical import compute_map_hash
 from schemashift.freeze.freezer import freeze_map, load_frozen_map
-from schemashift.freeze.gate import evaluate_gate
 from schemashift.freeze.overrides import apply_overrides
 
 
@@ -44,8 +43,9 @@ def test_freeze_tamper_detection(tmp_path):
     _, path = freeze_map(smap, tmp_path)
 
     # Tamper with file
-    from pathlib import Path
     import stat
+    from pathlib import Path
+
     p = Path(path)
     p.chmod(stat.S_IWUSR | stat.S_IRUSR)
     p.write_text(p.read_text().replace("orders", "tampered_orders"))
@@ -59,8 +59,6 @@ def test_overrides():
     tbl = Table(name="reviews", columns=[col])
     smap = SchemaMap(tables=[tbl])
 
-    overrides = [
-        {"target": "reviews.rating", "set": {"transform": "int_coerce"}}
-    ]
+    overrides = [{"target": "reviews.rating", "set": {"transform": "int_coerce"}}]
     updated = apply_overrides(smap, overrides)
     assert updated.tables[0].columns[0].transform == "int_coerce"

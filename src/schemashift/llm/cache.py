@@ -8,9 +8,6 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-from typing import Any
-
-from schemashift.errors import LLMCacheMiss
 
 
 class LLMCache:
@@ -21,7 +18,7 @@ class LLMCache:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
     def _key(self, provider: str, model: str, prompt: str) -> str:
-        content = f"{provider}|{model}|{prompt}".encode("utf-8")
+        content = f"{provider}|{model}|{prompt}".encode()
         return hashlib.sha256(content).hexdigest()
 
     def get(self, provider: str, model: str, prompt: str) -> str | None:
@@ -31,7 +28,8 @@ class LLMCache:
         if entry_file.exists():
             try:
                 data = json.loads(entry_file.read_text(encoding="utf-8"))
-                return data.get("response")
+                resp = data.get("response")
+                return str(resp) if resp is not None else None
             except Exception:
                 return None
         return None

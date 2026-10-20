@@ -6,6 +6,7 @@ Spec: llm-assist/annotate-scripts
 from __future__ import annotations
 
 from pathlib import Path
+
 from schemashift.assist.fallbacks import fallback_annotate_scripts
 from schemashift.contracts.llm import ScriptAnnotation
 from schemashift.contracts.schema_map import SchemaMap

@@ -1,0 +1,11 @@
+-- schemashift map_hash=sha256:a6dfb0cbaaa0ab1359eb734eda0c7299de6dff4cc78daf6700c410ab03f866e6 map_version=1 generator=rollback
+-- DO NOT EDIT DIRECTLY - GENERATED FROM FROZEN SCHEMA MAP
+
+
+DROP TABLE IF EXISTS "users_tags" CASCADE;
+DROP TABLE IF EXISTS "reviews" CASCADE;
+DROP TABLE IF EXISTS "orders_items" CASCADE;
+DROP TABLE IF EXISTS "orders" CASCADE;
+DROP TABLE IF EXISTS "users" CASCADE;
+DROP TABLE IF EXISTS "products_categories" CASCADE;
+DROP TABLE IF EXISTS "products" CASCADE;

@@ -9,8 +9,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from schemashift.contracts.schema_map import SchemaMap, Table
-from schemashift.gen.header import make_sql_header
+from schemashift.contracts.schema_map import SchemaMap
 from schemashift.migrate.ordering import get_table_topological_order
 
 

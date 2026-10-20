@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import random
 import string
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
 
@@ -24,77 +24,210 @@ from bson import Decimal128, ObjectId
 _SEED = 42
 
 _FIRST_NAMES: list[str] = [
-    "Alice", "Bob", "Carol", "Dave", "Eve", "Frank", "Grace", "Heidi",
-    "Ivan", "Judy", "Karl", "Laura", "Mallory", "Niaj", "Oscar", "Peggy",
-    "Quentin", "Rupert", "Sybil", "Trent", "Uma", "Victor", "Wendy",
-    "Xander", "Yuki", "Zara",
+    "Alice",
+    "Bob",
+    "Carol",
+    "Dave",
+    "Eve",
+    "Frank",
+    "Grace",
+    "Heidi",
+    "Ivan",
+    "Judy",
+    "Karl",
+    "Laura",
+    "Mallory",
+    "Niaj",
+    "Oscar",
+    "Peggy",
+    "Quentin",
+    "Rupert",
+    "Sybil",
+    "Trent",
+    "Uma",
+    "Victor",
+    "Wendy",
+    "Xander",
+    "Yuki",
+    "Zara",
 ]
 
 _LAST_NAMES: list[str] = [
-    "Adams", "Baker", "Clark", "Diaz", "Evans", "Foster", "Garcia",
-    "Harris", "Ito", "Johnson", "Kim", "Lee", "Martinez", "Nguyen",
-    "Olson", "Patel", "Quinn", "Rivera", "Smith", "Taylor", "Ueda",
-    "Vargas", "Williams", "Xu", "Young", "Zhang",
+    "Adams",
+    "Baker",
+    "Clark",
+    "Diaz",
+    "Evans",
+    "Foster",
+    "Garcia",
+    "Harris",
+    "Ito",
+    "Johnson",
+    "Kim",
+    "Lee",
+    "Martinez",
+    "Nguyen",
+    "Olson",
+    "Patel",
+    "Quinn",
+    "Rivera",
+    "Smith",
+    "Taylor",
+    "Ueda",
+    "Vargas",
+    "Williams",
+    "Xu",
+    "Young",
+    "Zhang",
 ]
 
 _STREETS: list[str] = [
-    "Main St", "Oak Ave", "Pine Rd", "Elm Blvd", "Maple Dr",
-    "Cedar Ln", "Birch Way", "Walnut Ct", "Spruce Pl", "Ash Cir",
+    "Main St",
+    "Oak Ave",
+    "Pine Rd",
+    "Elm Blvd",
+    "Maple Dr",
+    "Cedar Ln",
+    "Birch Way",
+    "Walnut Ct",
+    "Spruce Pl",
+    "Ash Cir",
 ]
 
 _CITIES: list[str] = [
-    "Springfield", "Riverdale", "Fairview", "Madison", "Georgetown",
-    "Clinton", "Arlington", "Salem", "Chester", "Greenville",
+    "Springfield",
+    "Riverdale",
+    "Fairview",
+    "Madison",
+    "Georgetown",
+    "Clinton",
+    "Arlington",
+    "Salem",
+    "Chester",
+    "Greenville",
 ]
 
 _STATES: list[str] = [
-    "CA", "TX", "NY", "FL", "IL", "PA", "OH", "GA", "NC", "MI",
-    "NJ", "VA", "WA", "AZ", "MA", "TN", "IN", "MO", "MD", "WI",
+    "CA",
+    "TX",
+    "NY",
+    "FL",
+    "IL",
+    "PA",
+    "OH",
+    "GA",
+    "NC",
+    "MI",
+    "NJ",
+    "VA",
+    "WA",
+    "AZ",
+    "MA",
+    "TN",
+    "IN",
+    "MO",
+    "MD",
+    "WI",
 ]
 
 _PRODUCT_ADJECTIVES: list[str] = [
-    "Premium", "Classic", "Eco", "Ultra", "Pro", "Mini", "Mega",
-    "Smart", "Turbo", "Deluxe",
+    "Premium",
+    "Classic",
+    "Eco",
+    "Ultra",
+    "Pro",
+    "Mini",
+    "Mega",
+    "Smart",
+    "Turbo",
+    "Deluxe",
 ]
 
 _PRODUCT_NOUNS: list[str] = [
-    "Widget", "Gadget", "Gizmo", "Doohickey", "Thingamajig",
-    "Sprocket", "Contraption", "Device", "Module", "Apparatus",
+    "Widget",
+    "Gadget",
+    "Gizmo",
+    "Doohickey",
+    "Thingamajig",
+    "Sprocket",
+    "Contraption",
+    "Device",
+    "Module",
+    "Apparatus",
 ]
 
 _CATEGORIES: list[str] = [
-    "electronics", "home", "garden", "sports", "books",
-    "toys", "clothing", "health", "automotive", "food",
+    "electronics",
+    "home",
+    "garden",
+    "sports",
+    "books",
+    "toys",
+    "clothing",
+    "health",
+    "automotive",
+    "food",
 ]
 
 _ATTR_KEYS: list[str] = [
-    "color", "weight_kg", "material", "warranty_months",
-    "brand", "origin", "voltage", "dimensions",
+    "color",
+    "weight_kg",
+    "material",
+    "warranty_months",
+    "brand",
+    "origin",
+    "voltage",
+    "dimensions",
 ]
 
 _CARRIERS: list[str] = ["UPS", "FedEx", "USPS", "DHL"]
 _ORDER_STATUSES: list[str] = ["pending", "shipped", "delivered", "cancelled"]
 
 _TAGS: list[str] = [
-    "vip", "wholesale", "returning", "new", "beta-tester",
-    "influencer", "enterprise", "early-adopter",
+    "vip",
+    "wholesale",
+    "returning",
+    "new",
+    "beta-tester",
+    "influencer",
+    "enterprise",
+    "early-adopter",
 ]
 
 _THEMES: list[str] = ["light", "dark", "system"]
 
 _REVIEW_TITLES: list[str] = [
-    "Great product!", "Not bad", "Could be better", "Love it",
-    "Terrible quality", "Exceeded expectations", "Decent value",
-    "Would buy again", "Disappointing", "Perfect for me",
+    "Great product!",
+    "Not bad",
+    "Could be better",
+    "Love it",
+    "Terrible quality",
+    "Exceeded expectations",
+    "Decent value",
+    "Would buy again",
+    "Disappointing",
+    "Perfect for me",
 ]
 
 _UNCOERCIBLE_RATINGS: list[str] = [
-    "great", "terrible", "amazing", "awful", "okay",
-    "fantastic", "mediocre", "superb", "poor", "excellent",
+    "great",
+    "terrible",
+    "amazing",
+    "awful",
+    "okay",
+    "fantastic",
+    "mediocre",
+    "superb",
+    "poor",
+    "excellent",
 ]
 
 _COUPON_CODES: list[str] = [
-    "SAVE10", "WELCOME", "SUMMER20", "VIP15", "FLASH25",
+    "SAVE10",
+    "WELCOME",
+    "SUMMER20",
+    "VIP15",
+    "FLASH25",
 ]
 
 # ---------------------------------------------------------------------------
@@ -130,7 +263,7 @@ def _rand_date(rng: random.Random, year: int = 2024) -> datetime:
     hour = rng.randint(0, 23)
     minute = rng.randint(0, 59)
     second = rng.randint(0, 59)
-    return datetime(year, month, day, hour, minute, second, tzinfo=timezone.utc)
+    return datetime(year, month, day, hour, minute, second, tzinfo=UTC)
 
 
 def _rand_decimal(rng: random.Random, lo: float, hi: float, places: int = 2) -> Decimal128:
@@ -252,11 +385,13 @@ def _build_orders(
         items: list[dict[str, Any]] = []
         for sku in chosen_skus:
             prod = products_by_sku[sku]
-            items.append({
-                "sku": sku,
-                "qty": rng.randint(1, 10),
-                "unitPrice": prod["price"],
-            })
+            items.append(
+                {
+                    "sku": sku,
+                    "qty": rng.randint(1, 10),
+                    "unitPrice": prod["price"],
+                }
+            )
 
         order: dict[str, Any] = {
             "_id": _make_oid(rng),
@@ -320,15 +455,17 @@ def _inject_orphan_review(
 ) -> None:
     """Append a review whose userId does not match any real user."""
     fake_user_id = _make_oid(rng)
-    reviews.append({
-        "_id": _make_oid(rng),
-        "productSku": rng.choice(skus),
-        "userId": fake_user_id,
-        "rating": 3,
-        "title": "Orphan review — no matching user",
-        "body": "This review references a userId that does not exist.",
-        "createdAt": _rand_date(rng),
-    })
+    reviews.append(
+        {
+            "_id": _make_oid(rng),
+            "productSku": rng.choice(skus),
+            "userId": fake_user_id,
+            "rating": 3,
+            "title": "Orphan review — no matching user",
+            "body": "This review references a userId that does not exist.",
+            "createdAt": _rand_date(rng),
+        }
+    )
 
 
 def _inject_bad_date(
@@ -340,18 +477,20 @@ def _inject_bad_date(
 ) -> None:
     """Append an order with createdAt set to a non-date string."""
     sku = rng.choice(skus)
-    orders.append({
-        "_id": _make_oid(rng),
-        "userId": rng.choice(user_ids),
-        "status": "pending",
-        "shipping": {
-            "carrier": "UPS",
-            "trackingNo": _tracking_number(rng),
-            "address": _rand_address(rng),
-        },
-        "items": [{"sku": sku, "qty": 1, "unitPrice": products_by_sku[sku]["price"]}],
-        "createdAt": "not-a-date",
-    })
+    orders.append(
+        {
+            "_id": _make_oid(rng),
+            "userId": rng.choice(user_ids),
+            "status": "pending",
+            "shipping": {
+                "carrier": "UPS",
+                "trackingNo": _tracking_number(rng),
+                "address": _rand_address(rng),
+            },
+            "items": [{"sku": sku, "qty": 1, "unitPrice": products_by_sku[sku]["price"]}],
+            "createdAt": "not-a-date",
+        }
+    )
 
 
 def _inject_uncoercible_rating(
@@ -362,15 +501,17 @@ def _inject_uncoercible_rating(
 ) -> None:
     """Append reviews with word-based ratings that cannot be cast to int."""
     for word in _UNCOERCIBLE_RATINGS[:3]:
-        reviews.append({
-            "_id": _make_oid(rng),
-            "productSku": rng.choice(skus),
-            "userId": rng.choice(user_ids),
-            "rating": word,
-            "title": f"Uncoercible rating: {word}",
-            "body": f"This review has a non-numeric rating string: {word}.",
-            "createdAt": _rand_date(rng),
-        })
+        reviews.append(
+            {
+                "_id": _make_oid(rng),
+                "productSku": rng.choice(skus),
+                "userId": rng.choice(user_ids),
+                "rating": word,
+                "title": f"Uncoercible rating: {word}",
+                "body": f"This review has a non-numeric rating string: {word}.",
+                "createdAt": _rand_date(rng),
+            }
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -474,12 +615,14 @@ def seed_shop(
     db.client.drop_database(db_name)
 
     counts: dict[str, int] = {}
-    for coll_name, docs in sorted([
-        ("orders", orders),
-        ("products", products),
-        ("reviews", reviews),
-        ("users", users),
-    ]):
+    for coll_name, docs in sorted(
+        [
+            ("orders", orders),
+            ("products", products),
+            ("reviews", reviews),
+            ("users", users),
+        ]
+    ):
         db[coll_name].insert_many(docs)
         counts[coll_name] = len(docs)
 

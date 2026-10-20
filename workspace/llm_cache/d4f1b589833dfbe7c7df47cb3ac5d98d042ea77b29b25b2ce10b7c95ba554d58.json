@@ -1,0 +1,7 @@
+{
+  "key": "d4f1b589833dfbe7c7df47cb3ac5d98d042ea77b29b25b2ce10b7c95ba554d58",
+  "provider": "replay",
+  "model": "gemini-2.5-flash",
+  "prompt": "Explain why this database migration has a match percentage of 93.5%.\nTop drag fields: ['userId', 'userId', 'tags[]', 'rating', 'categories[]']\nReturn ExplanationNote JSON with section and text fields.",
+  "response": "{\"section\": \"similarity\", \"text\": \"Mongo and SQL schemas match closely with normalized foreign keys.\", \"ambiguous_pairs\": []}"
+}

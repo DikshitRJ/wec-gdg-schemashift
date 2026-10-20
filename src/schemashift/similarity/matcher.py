@@ -5,7 +5,6 @@ Spec: similarity/matcher
 
 from __future__ import annotations
 
-from typing import Any
 from schemashift.contracts.profile import FieldProfile, SourceProfile
 from schemashift.contracts.schema_map import Column, SchemaMap, Table
 
@@ -43,10 +42,43 @@ def pair_fields(
 
     for coll_prof in profile.collections:
         coll_tables = tables_by_coll.get(coll_prof.name, [])
+        all_paths = {f.path for f in coll_prof.fields}
+
+        # Find paths mapped to JSONB
+        jsonb_paths = {
+            col.source_path
+            for tbl in coll_tables
+            for col in tbl.columns
+            if col.pg_type == "JSONB" and col.source_path
+        }
+
         for field in coll_prof.fields:
             # Skip root _id mapping to itself
             if field.path == "_id":
                 continue
+
+            # Skip fields nested inside a JSONB column (they are stored in the JSONB document)
+            if any(field.path.startswith(f"{jp}.") for jp in jsonb_paths):
+                continue
+
+            # Skip intermediate containers:
+            # 1. array element container (e.g. items[]) when sub-properties exist
+            if field.path.endswith("[]") and any(p.startswith(f"{field.path}.") for p in all_paths):
+                continue
+
+            # 2. parent object when its children are flattened or expanded into child tables
+            has_children = any(
+                p != field.path
+                and (p.startswith(f"{field.path}.") or p.startswith(f"{field.path}[]"))
+                for p in all_paths
+            )
+            if has_children:
+                # Keep only if mapped directly (e.g. freeform object mapped to JSONB column)
+                mapped_directly = any(
+                    col.source_path == field.path for tbl in coll_tables for col in tbl.columns
+                )
+                if not mapped_directly:
+                    continue
 
             matched_col: Column | None = None
             matched_tbl: Table | None = None
@@ -54,12 +86,16 @@ def pair_fields(
             for tbl in coll_tables:
                 for col in tbl.columns:
                     # Check exact source path match or col name match
-                    if col.source_path == field.path or (not col.source_path and col.name == field.path):
+                    if col.source_path == field.path or (
+                        not col.source_path and col.name == field.path
+                    ):
                         matched_col = col
                         matched_tbl = tbl
                         break
                     # Check array element path match (e.g. items[].sku matching items.sku)
-                    if col.source_path and field.path.replace("[]", "") == col.source_path.replace("[]", ""):
+                    if col.source_path and field.path.replace("[]", "") == col.source_path.replace(
+                        "[]", ""
+                    ):
                         matched_col = col
                         matched_tbl = tbl
                         break

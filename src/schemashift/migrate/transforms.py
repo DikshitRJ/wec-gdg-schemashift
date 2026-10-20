@@ -6,11 +6,13 @@ Spec: migrate/transforms
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from collections.abc import Callable
+from datetime import UTC, datetime
 from decimal import Decimal
-from typing import Any, Callable
+from typing import Any
 
 from bson import Decimal128, ObjectId
+
 from schemashift.errors import SchemaShiftError
 
 
@@ -51,15 +53,15 @@ def date_utc(val: Any, *, path: str = "") -> datetime | None:
         return None
     if isinstance(val, datetime):
         if val.tzinfo is None:
-            return val.replace(tzinfo=timezone.utc)
-        return val.astimezone(timezone.utc)
+            return val.replace(tzinfo=UTC)
+        return val.astimezone(UTC)
     if isinstance(val, str):
         try:
             # Handle ISO format
             dt = datetime.fromisoformat(val.replace("Z", "+00:00"))
             if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            return dt.astimezone(timezone.utc)
+                dt = dt.replace(tzinfo=UTC)
+            return dt.astimezone(UTC)
         except Exception as exc:
             raise TransformError(
                 f"Cannot parse date string '{val}': {exc}",

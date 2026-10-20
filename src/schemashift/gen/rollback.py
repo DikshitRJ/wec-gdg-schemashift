@@ -6,6 +6,7 @@ Spec: scriptgen/rollback
 from __future__ import annotations
 
 from pathlib import Path
+
 from schemashift.contracts.schema_map import SchemaMap
 from schemashift.gen.header import make_sql_header
 from schemashift.identifiers import quote_ident

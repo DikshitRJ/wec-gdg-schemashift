@@ -5,7 +5,6 @@ Spec: orm/naming
 
 from __future__ import annotations
 
-import re
 from schemashift.identifiers import singularize, snake_case
 
 

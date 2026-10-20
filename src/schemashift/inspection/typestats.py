@@ -19,10 +19,10 @@ from bson import Decimal128, ObjectId
 
 from schemashift.contracts.profile import FieldProfile
 
-
 # ---------------------------------------------------------------------------
 # BSON type detection
 # ---------------------------------------------------------------------------
+
 
 def _bson_type_name(value: Any) -> str:
     """Return a canonical BSON type string for *value*."""
@@ -64,18 +64,18 @@ class _PathAccumulator:
     """Accumulates statistics for one dotted path."""
 
     __slots__ = (
-        "type_counts",
-        "present",
-        "string_lengths",
-        "numeric_values",
-        "decimal_max_digits",
-        "distinct_values",
-        "distinct_capped",
         "array_lengths",
-        "key_signatures",
+        "decimal_max_digits",
+        "distinct_capped",
+        "distinct_values",
         "examples",
         "is_array",
         "is_object",
+        "key_signatures",
+        "numeric_values",
+        "present",
+        "string_lengths",
+        "type_counts",
     )
 
     def __init__(self) -> None:
@@ -163,9 +163,7 @@ class _PathAccumulator:
         unique_sigs = sorted(set(self.key_signatures))
         key_variance = 0.0
         if len(self.key_signatures) > 1:
-            key_variance = round(
-                (len(unique_sigs) - 1) / (len(self.key_signatures) - 1), 6
-            )
+            key_variance = round((len(unique_sigs) - 1) / (len(self.key_signatures) - 1), 6)
 
         distinct_estimate = len(self.distinct_values)
         is_unique = distinct_estimate == self.present and not self.distinct_capped
@@ -193,6 +191,7 @@ class _PathAccumulator:
 # Recursive document walker
 # ---------------------------------------------------------------------------
 
+
 def _walk(
     value: Any,
     prefix: str,
@@ -217,9 +216,10 @@ def _walk(
 # Public API
 # ---------------------------------------------------------------------------
 
+
 def compute_field_stats(
     docs: list[dict[str, Any]],
-    collection_name: str,  # noqa: ARG001 – reserved for future use
+    collection_name: str,
 ) -> list[FieldProfile]:
     """Walk *docs* and return sorted ``FieldProfile`` list.
 
@@ -246,7 +246,4 @@ def compute_field_stats(
         for key in sorted(doc.keys()):
             _walk(doc[key], key, accumulators)
 
-    return [
-        acc.to_field_profile(path, total_docs)
-        for path, acc in sorted(accumulators.items())
-    ]
+    return [acc.to_field_profile(path, total_docs) for path, acc in sorted(accumulators.items())]

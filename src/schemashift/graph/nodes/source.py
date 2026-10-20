@@ -6,6 +6,8 @@ Spec: orchestration/node-source
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
+
 from pymongo import MongoClient
 
 from schemashift.config import Settings
@@ -36,7 +38,7 @@ def sample_source_node(state: GraphState) -> GraphState:
     config_path = state.get("config_path", "workspace/schemashift.yaml")
     settings = Settings.load(config_path)
 
-    mongo_client = MongoClient(settings.source.uri)
+    mongo_client: MongoClient[dict[str, Any]] = MongoClient(settings.source.uri)
     profile = build_profile(
         mongo_client,
         settings.source.database,
@@ -56,6 +58,7 @@ def sample_source_node(state: GraphState) -> GraphState:
 def infer_candidates_node(state: GraphState) -> GraphState:
     """Deterministic node: run rule-based schema inference."""
     import json
+
     from schemashift.contracts.profile import SourceProfile
 
     config_path = state.get("config_path", "workspace/schemashift.yaml")

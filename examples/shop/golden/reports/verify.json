@@ -1,0 +1,200 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "counts",
+      "table": "orders",
+      "passed": true,
+      "expected": "500",
+      "actual": "500",
+      "details": "Expected 500 rows from Mongo, found 500 in Postgres."
+    },
+    {
+      "name": "counts",
+      "table": "orders_items",
+      "passed": true,
+      "expected": "1504",
+      "actual": "1504",
+      "details": "Expected 1504 rows from Mongo, found 1504 in Postgres."
+    },
+    {
+      "name": "counts",
+      "table": "products",
+      "passed": true,
+      "expected": "50",
+      "actual": "50",
+      "details": "Expected 50 rows from Mongo, found 50 in Postgres."
+    },
+    {
+      "name": "counts",
+      "table": "products_categories",
+      "passed": true,
+      "expected": "100",
+      "actual": "100",
+      "details": "Expected 100 rows from Mongo, found 100 in Postgres."
+    },
+    {
+      "name": "counts",
+      "table": "reviews",
+      "passed": true,
+      "expected": "300",
+      "actual": "300",
+      "details": "Expected 300 rows from Mongo, found 300 in Postgres."
+    },
+    {
+      "name": "counts",
+      "table": "users",
+      "passed": true,
+      "expected": "200",
+      "actual": "200",
+      "details": "Expected 200 rows from Mongo, found 200 in Postgres."
+    },
+    {
+      "name": "counts",
+      "table": "users_tags",
+      "passed": true,
+      "expected": "296",
+      "actual": "296",
+      "details": "Expected 296 rows from Mongo, found 296 in Postgres."
+    },
+    {
+      "name": "orphans",
+      "table": "orders",
+      "passed": true,
+      "expected": "0 orphans",
+      "actual": "0 orphans",
+      "details": "FK orders.['user_id'] -> users.['id'] has 0 orphaned records."
+    },
+    {
+      "name": "orphans",
+      "table": "orders_items",
+      "passed": true,
+      "expected": "0 orphans",
+      "actual": "0 orphans",
+      "details": "FK orders_items.['order_id'] -> orders.['id'] has 0 orphaned records."
+    },
+    {
+      "name": "orphans",
+      "table": "products_categories",
+      "passed": true,
+      "expected": "0 orphans",
+      "actual": "0 orphans",
+      "details": "FK products_categories.['product_id'] -> products.['id'] has 0 orphaned records."
+    },
+    {
+      "name": "orphans",
+      "table": "reviews",
+      "passed": true,
+      "expected": "0 orphans",
+      "actual": "0 orphans",
+      "details": "FK reviews.['product_sku'] -> products.['sku'] has 0 orphaned records."
+    },
+    {
+      "name": "orphans",
+      "table": "reviews",
+      "passed": true,
+      "expected": "0 orphans",
+      "actual": "0 orphans",
+      "details": "FK reviews.['user_id'] -> users.['id'] has 0 orphaned records."
+    },
+    {
+      "name": "orphans",
+      "table": "users_tags",
+      "passed": true,
+      "expected": "0 orphans",
+      "actual": "0 orphans",
+      "details": "FK users_tags.['user_id'] -> users.['id'] has 0 orphaned records."
+    },
+    {
+      "name": "checksums",
+      "table": "orders",
+      "passed": true,
+      "expected": "hash:6888389a126a56a8",
+      "actual": "hash:6888389a126a56a8",
+      "details": "Column orders.coupon_code checksum verified over 500 rows."
+    },
+    {
+      "name": "checksums",
+      "table": "orders_items",
+      "passed": true,
+      "expected": "hash:b9b1d636b86d8403",
+      "actual": "hash:b9b1d636b86d8403",
+      "details": "Column orders_items.order_id checksum verified over 1504 rows."
+    },
+    {
+      "name": "checksums",
+      "table": "products",
+      "passed": true,
+      "expected": "hash:38bfe816db80316a",
+      "actual": "hash:38bfe816db80316a",
+      "details": "Column products.description checksum verified over 50 rows."
+    },
+    {
+      "name": "checksums",
+      "table": "products_categories",
+      "passed": true,
+      "expected": "hash:5a2c9bca3187a71a",
+      "actual": "hash:5a2c9bca3187a71a",
+      "details": "Column products_categories.product_id checksum verified over 100 rows."
+    },
+    {
+      "name": "checksums",
+      "table": "reviews",
+      "passed": true,
+      "expected": "hash:f77569eb9790c88c",
+      "actual": "hash:f77569eb9790c88c",
+      "details": "Column reviews.body checksum verified over 300 rows."
+    },
+    {
+      "name": "checksums",
+      "table": "users",
+      "passed": true,
+      "expected": "hash:51dd79e8f1e308b6",
+      "actual": "hash:51dd79e8f1e308b6",
+      "details": "Column users.address_city checksum verified over 200 rows."
+    },
+    {
+      "name": "checksums",
+      "table": "users_tags",
+      "passed": true,
+      "expected": "hash:b044985745565d5d",
+      "actual": "hash:b044985745565d5d",
+      "details": "Column users_tags.user_id checksum verified over 296 rows."
+    },
+    {
+      "name": "spotcheck",
+      "table": "orders",
+      "passed": true,
+      "expected": "50 sampled rows match",
+      "actual": "50 rows matched",
+      "details": "All sampled rows match."
+    },
+    {
+      "name": "spotcheck",
+      "table": "products",
+      "passed": true,
+      "expected": "50 sampled rows match",
+      "actual": "50 rows matched",
+      "details": "All sampled rows match."
+    },
+    {
+      "name": "spotcheck",
+      "table": "reviews",
+      "passed": true,
+      "expected": "50 sampled rows match",
+      "actual": "50 rows matched",
+      "details": "All sampled rows match."
+    },
+    {
+      "name": "spotcheck",
+      "table": "users",
+      "passed": true,
+      "expected": "50 sampled rows match",
+      "actual": "50 rows matched",
+      "details": "All sampled rows match."
+    }
+  ],
+  "total_checks": 24,
+  "passed_checks": 24,
+  "failed_checks": 0
+}

@@ -4,6 +4,7 @@ Spec: migrate/unit-test
 """
 
 import json
+
 from schemashift.migrate.executor import split_sql_statements
 from schemashift.migrate.failures import RowFailure, write_failures_report
 
@@ -12,7 +13,7 @@ def test_split_sql_statements():
     script = """
     -- initial comment
     CREATE TABLE "users" ("id" CHAR(24));
-    
+
     -- another comment
     CREATE TABLE "orders" ("id" CHAR(24));
     """

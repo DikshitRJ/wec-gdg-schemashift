@@ -5,7 +5,6 @@ Spec: cli-tui/prompts
 
 from __future__ import annotations
 
-import typer
 from rich.prompt import Prompt
 
 

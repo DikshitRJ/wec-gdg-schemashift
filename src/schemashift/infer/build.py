@@ -5,12 +5,8 @@ Spec: infer/build
 
 from __future__ import annotations
 
-import json
-from pathlib import Path
-from typing import Any
-
 from schemashift.config import Settings
-from schemashift.contracts.profile import CollectionProfile, FieldProfile, SourceProfile
+from schemashift.contracts.profile import FieldProfile, SourceProfile
 from schemashift.contracts.schema_map import (
     Column,
     ForeignKey,
@@ -19,8 +15,7 @@ from schemashift.contracts.schema_map import (
     SourceInfo,
     Table,
 )
-from schemashift.errors import SchemaShiftError
-from schemashift.identifiers import quote_ident, safe_name, singularize, snake_case
+from schemashift.identifiers import safe_name, singularize, snake_case
 from schemashift.infer.keys import detect_indexes_and_uniques
 from schemashift.infer.nesting import NestingStrategy, decide_nesting_strategy
 from schemashift.infer.references import detect_foreign_keys
@@ -127,7 +122,9 @@ def build_draft_map(profile: SourceProfile, settings: Settings) -> SchemaMap:
                 if parent_field and parent_field.is_object:
                     p_strat, _ = decide_nesting_strategy(
                         parent_field,
-                        child_fields=[f for f in coll.fields if f.path.startswith(f"{parent_path}.")],
+                        child_fields=[
+                            f for f in coll.fields if f.path.startswith(f"{parent_path}.")
+                        ],
                         embed_max_fields=settings.inference.embed_max_fields,
                         jsonb_variance_threshold=settings.inference.jsonb_variance_threshold,
                     )
@@ -219,8 +216,10 @@ def build_draft_map(profile: SourceProfile, settings: Settings) -> SchemaMap:
 
             # If array of scalars
             scalar_elem = next((f for f in subfields if f.path == array_path), None)
-            if scalar_elem and not any("." in f.path[len(array_path):] for f in subfields if f.path != array_path):
-                pg_type, transform, amb = select_pg_type_and_transform(scalar_elem)
+            if scalar_elem and not any(
+                "." in f.path[len(array_path) :] for f in subfields if f.path != array_path
+            ):
+                pg_type, transform, _amb = select_pg_type_and_transform(scalar_elem)
                 child_cols.append(
                     Column(
                         name="value",
@@ -236,9 +235,11 @@ def build_draft_map(profile: SourceProfile, settings: Settings) -> SchemaMap:
                 for sf in sorted(subfields, key=lambda f: f.path):
                     if sf.path == array_path or sf.is_object or sf.is_array:
                         continue
-                    leaf_name = sf.path[prefix_len:] if sf.path.startswith(array_path + ".") else sf.path
+                    leaf_name = (
+                        sf.path[prefix_len:] if sf.path.startswith(array_path + ".") else sf.path
+                    )
                     col_name = safe_name(leaf_name.replace(".", "_"))
-                    pg_type, transform, amb = select_pg_type_and_transform(sf)
+                    pg_type, transform, _amb = select_pg_type_and_transform(sf)
                     child_cols.append(
                         Column(
                             name=col_name,
@@ -260,9 +261,7 @@ def build_draft_map(profile: SourceProfile, settings: Settings) -> SchemaMap:
                 if afk.columns != [parent_fk_col]:
                     child_fks.append(afk)
 
-            child_indexes = [
-                Index(columns=[parent_fk_col], unique=False)
-            ]
+            child_indexes = [Index(columns=[parent_fk_col], unique=False)]
 
             tables.append(
                 Table(

@@ -4,6 +4,7 @@ Spec: scriptgen/unit-test
 """
 
 import pytest
+
 from schemashift.contracts.schema_map import Column, ForeignKey, Index, SchemaMap, Table
 from schemashift.errors import SchemaShiftError
 from schemashift.gen.ddl import generate_ddl_sql
@@ -55,7 +56,7 @@ def test_generate_ddl_and_rollback():
     ddl = generate_ddl_sql(smap)
     assert 'CREATE TABLE IF NOT EXISTS "products"' in ddl
     assert 'CONSTRAINT "pk_products" PRIMARY KEY ("id")' in ddl
-    assert 'CREATE UNIQUE INDEX IF NOT EXISTS "idx_products_sku"' in ddl
+    assert 'CONSTRAINT "uq_products_sku" UNIQUE ("sku")' in ddl
 
     rollback = generate_rollback_sql(smap)
     assert 'DROP TABLE IF EXISTS "products" CASCADE;' in rollback

@@ -6,6 +6,7 @@ Spec: migrate/ordering
 from __future__ import annotations
 
 from collections import defaultdict, deque
+
 from schemashift.contracts.schema_map import SchemaMap, Table
 from schemashift.errors import SchemaShiftError
 
@@ -26,10 +27,9 @@ def get_table_topological_order(schema_map: SchemaMap) -> list[Table]:
         for fk in table.foreign_keys:
             parent = fk.ref_table
             child = table.name
-            if parent in tables_by_name and parent != child:
-                if child not in adj[parent]:
-                    adj[parent].add(child)
-                    in_degree[child] += 1
+            if parent in tables_by_name and parent != child and child not in adj[parent]:
+                adj[parent].add(child)
+                in_degree[child] += 1
 
     # Kahn's algorithm with deterministic tie-breaking (sorted queue)
     queue = deque(sorted([name for name, deg in in_degree.items() if deg == 0]))

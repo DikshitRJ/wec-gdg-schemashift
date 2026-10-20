@@ -32,10 +32,10 @@ test-unit:
 	uv run pytest tests/unit -q --cov=src/schemashift --cov-report=xml
 
 test-int: up
-	uv run pytest tests/integration -q
+	uv run pytest tests/integration -m integration -q
 
 test-e2e: up
-	uv run pytest tests/e2e -q
+	uv run pytest tests/e2e -m e2e -q
 
 test: test-unit test-int test-e2e
 

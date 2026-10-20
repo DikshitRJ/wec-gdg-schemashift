@@ -5,7 +5,9 @@ Spec: tests/e2e-happy-path
 
 import json
 from pathlib import Path
+
 import pytest
+
 from schemashift.graph.runner import MigrationRunner
 from schemashift.seed.shop import seed_shop
 
@@ -24,10 +26,9 @@ def test_happy_path_pipeline(mongo_client):
         run_id="e2e-happy-path",
     )
 
-    final_state = {}
     for update in stream:
         if update.get("event") == "complete":
-            final_state = update.get("state", {})
+            update.get("state", {})
 
     # 3. Assert artifacts were created
     out_dir = Path("workspace/out")

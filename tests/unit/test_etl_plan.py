@@ -3,8 +3,9 @@
 Spec: scriptgen/etl-unit-test
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
+
 import pytest
 from bson import Decimal128, ObjectId
 
@@ -30,7 +31,7 @@ def test_transforms():
     dt = datetime(2024, 1, 15, 12, 0, 0)
     res_dt = date_utc(dt)
     assert res_dt is not None
-    assert res_dt.tzinfo == timezone.utc
+    assert res_dt.tzinfo == UTC
 
     iso_dt = date_utc("2024-01-15T12:00:00Z")
     assert iso_dt is not None

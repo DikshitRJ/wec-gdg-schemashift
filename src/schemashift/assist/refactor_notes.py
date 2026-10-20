@@ -6,6 +6,7 @@ Spec: llm-assist/refactor-notes
 from __future__ import annotations
 
 from pathlib import Path
+
 from schemashift.contracts.llm import RefactorNote
 from schemashift.contracts.schema_map import SchemaMap
 from schemashift.llm.client import LLMClient
@@ -22,7 +23,11 @@ def generate_refactor_notes(
         "Suggest query idioms for replacing MongoDB queries (like $lookup or nested filters) with SQLAlchemy."
     )
     note = llm_client.complete(prompt, RefactorNote)
-    text = note.suggestion if note and note.suggestion else "Use SQLAlchemy session queries and repository methods for basic CRUD."
+    text = (
+        note.suggestion
+        if note and note.suggestion
+        else "Use SQLAlchemy session queries and repository methods for basic CRUD."
+    )
 
     p = Path(out_dir) / "orm" / "REFACTOR_NOTES.md"
     p.parent.mkdir(parents=True, exist_ok=True)

@@ -42,11 +42,14 @@ def _redact_value(value: Any) -> Any:
     if isinstance(value, list):
         return [_redact_value(item) for item in value]
 
-    # Scalars (int, float, bool, None, ObjectId, datetime …).
+    if value is None or isinstance(value, (int, float, bool)):
+        return value
+
+    # Scalars (ObjectId, Decimal, Decimal128, datetime, etc.).
     text = str(value)
     if len(text) > _TRUNCATE_LIMIT:
         return text[:_TRUNCATE_LIMIT] + "…"
-    return value
+    return text
 
 
 def redact_examples(field: FieldProfile) -> FieldProfile:

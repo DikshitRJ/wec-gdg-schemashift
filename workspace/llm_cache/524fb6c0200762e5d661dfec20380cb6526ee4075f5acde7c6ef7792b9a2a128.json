@@ -1,0 +1,7 @@
+{
+  "key": "524fb6c0200762e5d661dfec20380cb6526ee4075f5acde7c6ef7792b9a2a128",
+  "provider": "openai",
+  "model": "claude-sonnet-4-6",
+  "prompt": "Explain why this database migration has a match percentage of 93.5%.\nTop drag fields: ['userId', 'userId', 'tags[]', 'rating', 'categories[]']\nReturn ExplanationNote JSON with section and text fields.",
+  "response": "{\"section\": \"similarity\", \"text\": \"Mongo and SQL schemas match closely with normalized foreign keys.\", \"ambiguous_pairs\": []}"
+}

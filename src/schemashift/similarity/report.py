@@ -5,8 +5,8 @@ Spec: similarity/report
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
+
 from schemashift.config import ScoringConfig
 from schemashift.contracts.profile import SourceProfile
 from schemashift.contracts.schema_map import SchemaMap
@@ -143,13 +143,15 @@ def render_similarity_markdown(report: SimilarityReport, out_path: str | Path) -
             f"| `{es.collection}` | `{tables_str}` | `{es.total * 100:.1f}%` | {es.field_count} | {es.matched_count} | {es.guessed_count} | {es.needs_review_count} |"
         )
 
-    lines.extend([
-        "",
-        "## Top Score Drags (Ambiguous / Divergent Fields)",
-        "",
-        "| Source Field | Target Column | Score | Band | Reasons |",
-        "|---|---|---|---|---|",
-    ])
+    lines.extend(
+        [
+            "",
+            "## Top Score Drags (Ambiguous / Divergent Fields)",
+            "",
+            "| Source Field | Target Column | Score | Band | Reasons |",
+            "|---|---|---|---|---|",
+        ]
+    )
 
     for fs in report.drag_list:
         reasons = ", ".join(fs.reason_codes) or "None"

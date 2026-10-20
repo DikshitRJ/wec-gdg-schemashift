@@ -6,8 +6,6 @@ Spec: llm-assist/fallbacks
 from __future__ import annotations
 
 from schemashift.contracts.llm import (
-    ExplanationNote,
-    RefactorNote,
     RemapPatch,
     SchemaProposal,
     ScriptAnnotation,
@@ -32,7 +30,9 @@ def fallback_explain_similarity(report: SimilarityReport) -> str:
     if report.drag_list:
         lines.append(f"Top {len(report.drag_list)} fields affecting alignment:")
         for fs in report.drag_list[:5]:
-            lines.append(f"- {fs.source_path} -> {fs.target_table}.{fs.target_column} (score: {fs.total * 100:.1f}%, reasons: {', '.join(fs.reason_codes)})")
+            lines.append(
+                f"- {fs.source_path} -> {fs.target_table}.{fs.target_column} (score: {fs.total * 100:.1f}%, reasons: {', '.join(fs.reason_codes)})"
+            )
     else:
         lines.append("All fields mapped cleanly with high confidence.")
     return "\n".join(lines)
@@ -47,7 +47,9 @@ def fallback_annotate_scripts(schema_map: SchemaMap) -> ScriptAnnotation:
     ]
     has_jsonb = any(c.pg_type == "JSONB" for t in schema_map.tables for c in t.columns)
     if has_jsonb:
-        notes.append("JSONB columns detected. Ensure application queries use appropriate JSON operators.")
+        notes.append(
+            "JSONB columns detected. Ensure application queries use appropriate JSON operators."
+        )
 
     return ScriptAnnotation(
         risk_level="low" if not has_jsonb else "medium",
@@ -84,5 +86,7 @@ def fallback_drift_summary(report: VerifyReport) -> str:
     failed = [c for c in report.checks if not c.passed]
     lines = [f"Verification failed on {len(failed)} of {report.total_checks} checks:"]
     for c in failed:
-        lines.append(f"- {c.name} on {c.table}: expected {c.expected}, found {c.actual}. {c.details}")
+        lines.append(
+            f"- {c.name} on {c.table}: expected {c.expected}, found {c.actual}. {c.details}"
+        )
     return "\n".join(lines)
