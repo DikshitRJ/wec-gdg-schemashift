@@ -1,0 +1,69 @@
+services:
+  mongo:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mongo_data:/data/db
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: schemashift
+      POSTGRES_PASSWORD: schemashift
+      POSTGRES_DB: schemashift
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U schemashift"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  schemashift:
+    build:
+      context: .
+      target: runtime
+    depends_on:
+      mongo:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      PG_URI: postgresql://schemashift:schemashift@postgres:5432/schemashift
+      SCHEMASHIFT_LLM_API_BASE: ${SCHEMASHIFT_LLM_API_BASE:-}
+      SCHEMASHIFT_LLM_API_KEY: ${SCHEMASHIFT_LLM_API_KEY:-}
+    volumes:
+      - ./workspace:/workspace
+
+  tests:
+    build:
+      context: .
+      target: dev
+    depends_on:
+      mongo:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      PG_URI: postgresql://schemashift:schemashift@postgres:5432/schemashift
+      SCHEMASHIFT_LLM_API_BASE: ${SCHEMASHIFT_LLM_API_BASE:-}
+      SCHEMASHIFT_LLM_API_KEY: ${SCHEMASHIFT_LLM_API_KEY:-}
+    volumes:
+      - ./workspace:/workspace
+    profiles:
+      - test
+    entrypoint: ["uv", "run", "pytest"]
+
+volumes:
+  mongo_data:
+  pg_data:
