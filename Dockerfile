@@ -1,5 +1,5 @@
 # ---- Stage 1: base ----
-FROM python:3.12-slim AS base
+FROM python:3.15-slim AS base
 RUN groupadd -r schemashift && useradd -r -g schemashift -m schemashift
 WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:0.12 /uv /usr/local/bin/uv
