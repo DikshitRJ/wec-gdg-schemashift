@@ -1,0 +1,44 @@
+source:
+  uri: ${MONGO_URI:-mongodb://localhost:27017}
+  database: shop
+
+target:
+  uri: ${PG_URI:-postgresql://schemashift:schemashift@localhost:5432/schemashift}
+  schema: public
+  reset_target: true
+
+sampling:
+  size: 1000
+
+inference:
+  embed_max_fields: 8
+  ref_hit_rate: 0.98
+  jsonb_variance_threshold: 0.4
+  array_scalar_strategy: table
+
+scoring:
+  weights:
+    name: 0.35
+    type: 0.35
+    structure: 0.20
+    constraints: 0.10
+  matched: 0.85
+  guessed: 0.60
+
+migration:
+  batch_size: 500
+  all_or_nothing: true
+  max_remap_attempts: 2
+  retries: 3
+
+llm:
+  provider: none
+  model: gemini-2.5-flash
+  api_base: ${SCHEMASHIFT_LLM_API_BASE:-}
+  api_key: ${SCHEMASHIFT_LLM_API_KEY:-}
+  cache_dir: workspace/llm_cache
+  redact: true
+
+overrides_file: workspace/out/state/overrides.yaml
+paths:
+  out: workspace/out
