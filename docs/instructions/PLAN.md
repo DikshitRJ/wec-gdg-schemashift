@@ -28,7 +28,7 @@ Done means all of these are true on a clean clone:
 | D1 | LangGraph only; skip n8n | Task says "n8n and/or LangGraph"; one orchestrator saves ~20 min |
 | D2 | All Python; generated ORM is **SQLAlchemy 2.0** (models + repositories), source app uses native `pymongo` | Task lists Prisma/Drizzle/TypeORM/Sequelize as *examples*; "native Mongo driver → one ORM" is the required concrete path. Stretch (only if idle): emit a text `schema.prisma` from the same map |
 | D3 | Source Mongo 7, target Postgres 16 | Named in the task |
-| D4 | LLM is optional. Providers: `none` (default), `replay` (committed cache, used in CI), `anthropic` | Reproducibility; demo never breaks on API failure |
+| D4 | LLM is optional. Providers: `none` (default), `replay` (committed cache, used in CI), `openai` | Reproducibility; demo never breaks on API failure |
 | D5 | LLM output goes to **sidecar files** (`*.notes.md`) or to **proposals** that deterministic validators accept/reject. It never edits SQL/ORM bodies and never touches a DB | "Never the sole writer of production side effects" |
 | D6 | Terminal UI = Typer + Rich; gate = LangGraph `interrupt()` resumed from the CLI | Required HITL without a frontend |
 | D7 | Root tables: `id CHAR(24)` PK (ObjectId hex). Child tables: identity `BIGINT` PK + FK + `position` | Simple, order-independent FK loading |
@@ -190,7 +190,7 @@ C20 docs: final readme, hybrid layer justification, spec reconciliation, zero-do
 | Postgres/Mongo startup flakiness | Compose healthchecks + `--wait`; tests use retry fixture |
 | LLM flakiness | Default provider `none`; CI uses `replay` |
 | Verifier shares transform code with loader (blind spot) | Independent comparator in spot-check + golden transform tests (documented limitation) |
-| Time overrun | Cut in this order: (1) `anthropic` provider (keep `none`/`replay`), (2) hypothesis property tests, (3) per-file spec rows for templates/prompts → directory-level, (4) Trivy + release job, (5) `pg_array` option, (6) zero-downtime doc → outline only |
+| Time overrun | Cut in this order: (1) `openai` provider (keep `none`/`replay`), (2) hypothesis property tests, (3) per-file spec rows for templates/prompts → directory-level, (4) Trivy + release job, (5) `pg_array` option, (6) zero-downtime doc → outline only |
 
 ## 9. Definition of Done (every agent branch)
 

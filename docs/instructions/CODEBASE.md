@@ -98,7 +98,7 @@ schemashift/
 | **llm/** | A07/A14 | | |
 | `llm/__init__.py` | A07 | llm-assist/llm-init | Re-exports |
 | `llm/client.py` | A07 | llm-assist/client | `LLMClient` protocol + factory |
-| `llm/providers.py` | A07 | llm-assist/providers | `none`, `replay`, `anthropic` |
+| `llm/providers.py` | A07 | llm-assist/providers | `none`, `replay`, `openai` |
 | `llm/cache.py` | A07 | llm-assist/cache | Record/replay store |
 | `llm/guard.py` | A07 | llm-assist/guard | Parse/validate/redact |
 | `llm/prompts/suggest_schema.md` | A14 | llm-assist/prompt-suggest | Prompt |

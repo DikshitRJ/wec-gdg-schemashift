@@ -13,7 +13,7 @@
 │          out/{migrations,etl,orm,reports,state}                            │
 │  tests (profile: test)  → pytest integration + e2e against the two DBs     │
 └────────────────────────────────────────────────────────────────────────────┘
-        optional egress: LLM provider (only the `anthropic` provider uses it)
+        optional egress: LLM provider
 ```
 
 Services: `mongo`, `postgres` (both with healthchecks), `schemashift` (entrypoint = the CLI), `tests` (profile `test`). Config comes from `workspace/schemashift.yaml` plus env interpolation (`${MONGO_URI}`, `${PG_URI}`); no credentials in files.
